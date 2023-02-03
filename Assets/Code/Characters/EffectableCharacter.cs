@@ -13,5 +13,10 @@ namespace Characters
         [SerializeField] protected float _maxHp;
 
         protected float _actualSpeed => SpeedModifier * _speed;
+        
+        public void SetMovement(Vector2 direction)
+        {
+            transform.Translate(_actualSpeed * Time.deltaTime * direction);
+        }
     }
 }
