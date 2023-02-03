@@ -29,8 +29,9 @@ namespace Magics.StatusEffects
                 target.CurrentHp -= _damagePerTick;
                 Debug.Log($"dot: {target.gameObject.name} : {target.CurrentHp}");
                 await UniTask.Delay(1000 / _ticksPerSecond);
-                timeSinceStarted += 1 / _ticksPerSecond;
+                timeSinceStarted += 1.0f / _ticksPerSecond;
             } while (timeSinceStarted<_durationInSeconds);
+            Debug.Log($"dot finished");
         }
     }
 }
