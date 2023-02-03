@@ -11,10 +11,20 @@ namespace Code.Runes
         [SerializeField] private SyllablesScriptableObject syllables;
 
         private Dictionary<string, Rune> _runes = new();
+        private HashSet<char> _usedLetters;
 
         public IEnumerable<Rune> GetRunes()
         {
             return _runes.Values;
+        }
+
+        public HashSet<char> GetLetters()
+        {
+            if (_usedLetters == null)
+            {
+                _usedLetters = _runes.Keys.SelectMany(syllable => syllable.ToCharArray()).ToHashSet();
+            }
+            return _usedLetters;
         }
 
         protected void Awake()
@@ -65,7 +75,11 @@ namespace Code.Runes
                     .First();
                 
                 selectedSyllables.Add(selectedSyllable);
-                selectedSyllable.Select(usedLetters.Add);
+                foreach (var c in selectedSyllable)
+                {
+                    usedLetters.Add(c);
+                }
+
             }
 
             return selectedSyllables;
