@@ -17,32 +17,20 @@ namespace Magics.StatusEffects
         protected override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
         {
             float timeSinceStarted = 0;
-            await UniTask.RunOnThreadPool(async () =>
-              {
-                  do
-                  {
-                      System.Diagnostics.Stopwatch sw = new ();
-                      timeSinceStarted += sw.ElapsedMilliseconds;
-                      sw.Start();
-                      await UniTask.DelayFrame(1);
-                      sw.Stop();
-                  } while (timeSinceStarted < _durationInSeconds);
-
-                  CancellationTokenSource.Cancel();
-
-              }, true, Token);
-
+            Debug.Log($"dot started");
             do
             {
                 if (Token.IsCancellationRequested)
                 {
+                    Debug.Log($"dot cancled");
                     return;
                 }
 
                 target.CurrentHp -= _damagePerTick;
-                Debug.Log($"{target.gameObject.name} : {target.CurrentHp}");
+                Debug.Log($"dot: {target.gameObject.name} : {target.CurrentHp}");
                 await UniTask.Delay(1000 / _ticksPerSecond);
-            } while (!Token.IsCancellationRequested);
+                timeSinceStarted += 1 / _ticksPerSecond;
+            } while (timeSinceStarted<_durationInSeconds);
         }
     }
 }

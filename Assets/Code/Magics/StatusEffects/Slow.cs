@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
-using System.Diagnostics;
-
+using UnityEngine;
 namespace Magics.StatusEffects
 {
     public class Slow : StatusEffect
@@ -16,33 +15,18 @@ namespace Magics.StatusEffects
         {
             target.SpeedModifier *= _speedModifier;
 
-            float timeSinceStarted = 0;
-            await UniTask.RunOnThreadPool(async () =>
+            Debug.Log($"slow started");
+
+            if (Token.IsCancellationRequested)
             {
-                do
-                {
-                    Stopwatch sw = new Stopwatch();
-                    timeSinceStarted += sw.ElapsedMilliseconds;
-                    sw.Start();
-                    await UniTask.DelayFrame(1);
-                    sw.Stop();
-                } while (timeSinceStarted < _durationInSeconds);
+                Debug.Log($"slow cancled");
+                return;
+            }
 
-                CancellationTokenSource.Cancel();
-
-            }, true, Token);
-
-            do
-            {
-                if (Token.IsCancellationRequested)
-                {
-                    target.SpeedModifier /= _speedModifier;
-                    CancellationTokenSource.Dispose();
-                    return;
-                }
-
-            } while (!Token.IsCancellationRequested);
-
+            target.SpeedModifier *= _speedModifier;
+            Debug.Log($"slow: {target.gameObject.name} : {target.SpeedModifier}");
+            await UniTask.Delay((int)(1000 * _durationInSeconds));
+            target.SpeedModifier /= _speedModifier;
         }
     }
 }

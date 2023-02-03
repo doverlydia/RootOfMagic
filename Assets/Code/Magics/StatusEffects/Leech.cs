@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-
+using UnityEngine;
 namespace Magics.StatusEffects
 {
     public class Leech : StatusEffect
@@ -15,6 +15,7 @@ namespace Magics.StatusEffects
         {
             source.CurrentHp += _hpRegain;
             target.CurrentHp -= _hpRegain;
+            Debug.Log("Leech on: " + target.gameObject.name);
             return UniTask.CompletedTask;
         }
     }
