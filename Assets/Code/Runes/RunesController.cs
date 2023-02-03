@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Code.Runes
 {
@@ -26,30 +28,48 @@ namespace Code.Runes
 
         private void InitRunes()
         {
-            // Just cloning so we won't change the original syllables
-            var unusedSyllables = syllables.availableSyllables.ToList();
+            var magics = new List<(StatusEffect statusEffect, ProjectilePattern pattern)>()
+            {
+                new (StatusEffect.DamageOverTime, ProjectilePattern.Beam),
+                new (StatusEffect.Slow, ProjectilePattern.DamageField),
+                new (StatusEffect.Leech, ProjectilePattern.Companion),
+                    
+            };
+            var selectedSyllables = SelectSyllables(syllables.availableSyllables, magics.Count);
+            for (int i = 0; i < magics.Count; i++)
+            {
+                var magic = magics[i];
+                var syllable = selectedSyllables[i];
+                _runes[syllable] = new Rune
+                {
+                    Syllable = syllable,
+                    StatusEffect = magic.statusEffect,
+                    ProjectilePattern = magic.pattern
+                };
+                
+            }
 
-            var rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffect.DamageOverTime,
-                ProjectilePattern.Beam);
-            _runes.Add(rune.Syllable, rune);
-
-            rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffect.Slow, ProjectilePattern.DamageField);
-            _runes.Add(rune.Syllable, rune);
-
-            rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffect.Leech, ProjectilePattern.Companion);
-            _runes.Add(rune.Syllable, rune);
+            
         }
 
-        private Rune GenerateRuneWithRandomSyllable(List<string> unusedSyllables, StatusEffect statusEffect,
-            ProjectilePattern projectilePattern)
+        private List<string> SelectSyllables(IEnumerable<string> syllablesOptions, int amount)
         {
-            var syllableToUse = unusedSyllables.RemoveRandom();
-            return new Rune()
+            var random = new Random();
+            HashSet<char> usedLetters = new HashSet<char>();
+            List<string> selectedSyllables = new List<string>();
+            for (int i = 0; i < amount; i++)
             {
-                Syllable = syllableToUse,
-                StatusEffect = statusEffect,
-                ProjectilePattern = projectilePattern
-            };
+                var selectedSyllable = syllablesOptions
+                    .Where(s => !s.Any(c => usedLetters.Contains(c)))
+                    .OrderBy(_ => random.NextDouble())
+                    .First();
+                
+                selectedSyllables.Add(selectedSyllable);
+                selectedSyllable.Select(usedLetters.Add);
+            }
+
+            return selectedSyllables;
+
         }
 
         private void PrintRunes()

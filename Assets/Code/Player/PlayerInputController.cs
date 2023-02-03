@@ -2,18 +2,20 @@ using System;
 using Code.Runes;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Code.Player
 {
     public class PlayerInputController : MonoBehaviour
     {
-        [SerializeField] private float speed;
+        [FormerlySerializedAs("speed")] [SerializeField] private float _speed;
         [SerializeField] private RunesController _runesController;
         [SerializeField] private Rigidbody2D _rigidbody;
         private Vector2 _moveDirection;
 
         private void Start()
         {
+            RebindRuneControls();
         }
 
         void OnMovement(InputValue inputValue)
@@ -23,7 +25,12 @@ namespace Code.Player
 
         private void FixedUpdate()
         {
-            _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (speed * Time.fixedTime));
+            _rigidbody.MovePosition(_rigidbody.position + _moveDirection * (_speed * Time.fixedTime));
+        }
+
+        private void RebindRuneControls()
+        {
+            
         }
     }
 }
