@@ -1,9 +1,8 @@
 {
-    "name": "Player",
+    "name": "NewAssembly",
     "rootNamespace": "",
     "references": [
-        "GUID:4ba5a59aea08f9d48899cb9581cfaea7",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:bb830cfd40e649a40a5e516a6923bef9"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
