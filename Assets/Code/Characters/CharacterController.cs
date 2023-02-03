@@ -9,13 +9,19 @@ namespace Characters
     {
         [SerializeField] protected float _speed;
         [SerializeField] protected float _hp;
+        [field: SerializeField] public ReactiveCollection<StatusEffectData> CurrentStatusEffects { get; set; }
 
-        public ReactiveCollection<StatusEffectData> CurrentStatusEffects { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
- 
-        public UniTask ApplyEffect()
+        public async UniTask DoEffect(StatusEffectData data)
         {
-            throw new System.NotImplementedException();
+            CurrentStatusEffects.Add(data);
+            UniTask.RunOnThreadPool(async () =>
+            {
+                await UniTask.Delay((int)data.Duration * 1000);
+                RemoveEffect(data);
+                CurrentStatusEffects.Remove(data);
+            });
+            await ApplyEffect(data);
         }
 
         public UniTask ApplyEffect(StatusEffectData data)
@@ -25,6 +31,7 @@ namespace Characters
 
         public void RemoveEffect(StatusEffectData data)
         {
+            throw new System.NotImplementedException();
         }
 
     }
