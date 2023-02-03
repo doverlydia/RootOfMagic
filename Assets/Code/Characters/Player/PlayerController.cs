@@ -18,11 +18,6 @@ namespace Characters.Player
             }
         }
 
-        protected void SetMovement(Vector2 direction)
-        {
-            transform.Translate(ActualSpeed * Time.deltaTime * direction);
-        }
-
         private void Update()
         {
             SetMovement(new Vector2(Input.GetAxisRaw("Horizontal"),

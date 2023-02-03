@@ -26,7 +26,7 @@ namespace Magics.StatusEffects
         
         public void SetMovement(Vector2 direction)
         {
-            transform.Translate(_speed * Time.deltaTime * direction);
+            transform.Translate(ActualSpeed * Time.deltaTime * direction);
         }
     }
 }

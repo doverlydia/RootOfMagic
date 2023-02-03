@@ -6,13 +6,17 @@ namespace Magics.Patterns
 {
     public abstract class Pattern
     {
+        public float Duration;
+        public int TicksPerSecond;
         protected Transform _pivot;
         protected float _angle;
         protected float _radius;
-        public Pattern(float angle, float radius)
+        public Pattern(float angle, float radius, float duration, int ticksPerSecond)
         {
             _angle = angle;
             _radius = radius;
+            Duration = duration;
+            TicksPerSecond = ticksPerSecond;
         }
 
         public List<EffectableCharacter> FindInRangeEffectables()
