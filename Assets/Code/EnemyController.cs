@@ -4,7 +4,7 @@ using Characters.Enemy;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Spawner : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _enemyPrefab;
@@ -22,6 +22,12 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         _camera = Camera.main;
+        Enemy.EnemyDied.AddListener(OnEnemyDied);
+    }
+
+    private void OnDestroy()
+    {
+        Enemy.EnemyDied.RemoveListener(OnEnemyDied);
     }
 
     private void Update()
@@ -102,5 +108,10 @@ public class Spawner : MonoBehaviour
     {
         enemy.SetMaxHp(enemyBaseHp * (1 + _wavesCompletedAmount / 5));
         enemy.damage = enemyBaseDamage * (1 + _wavesCompletedAmount / 10);
+    }
+
+    void OnEnemyDied(Guid id)
+    {
+        _enemies.Remove(id);
     }
 }
