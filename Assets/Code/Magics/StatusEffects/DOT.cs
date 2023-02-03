@@ -39,7 +39,7 @@ namespace Magics.StatusEffects
                     return;
                 }
 
-                target.Hp -= _damagePerTick;
+                target.CurrentHp -= _damagePerTick;
                 await UniTask.Delay(1000 / _ticksPerSecond);
             } while (!Token.IsCancellationRequested);
         }

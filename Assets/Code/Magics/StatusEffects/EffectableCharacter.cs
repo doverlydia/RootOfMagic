@@ -6,13 +6,13 @@ namespace Magics.StatusEffects
     public abstract class EffectableCharacter : MonoBehaviour
     {
         public float SpeedModifier = 1;
-        public float Hp;
+        public float CurrentHp;
         public ReactiveCollection<StatusEffect> StatusEffects = new();
 
-        [SerializeField] protected float _speed;
-        [SerializeField] protected float _maxHp;
+        [SerializeField] protected float speed;
+        [SerializeField] protected float maxHp;
 
-        protected float ActualSpeed => SpeedModifier * _speed;
+        protected float ActualSpeed => SpeedModifier * speed;
 
         private void Awake()
         {

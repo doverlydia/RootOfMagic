@@ -13,8 +13,8 @@ namespace Magics.StatusEffects
 
         protected override UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
         {
-            source.Hp += _hpRegain;
-            target.Hp -= _hpRegain;
+            source.CurrentHp += _hpRegain;
+            target.CurrentHp -= _hpRegain;
             return UniTask.CompletedTask;
         }
     }

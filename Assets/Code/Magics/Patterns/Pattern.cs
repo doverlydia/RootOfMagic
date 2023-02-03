@@ -1,5 +1,6 @@
 using Magics.StatusEffects;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Magics.Patterns
@@ -34,6 +35,8 @@ namespace Magics.Patterns
 
                 results.Add(ec);
             }
+
+            Debug.Log(string.Join(", ", results.Select(r => $"name: {r.name}")));
             return results;
         }
 
