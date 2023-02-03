@@ -1,12 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Magics.StatusEffects;
 using UnityEngine;
+using UnityEngine.Events;
+
 namespace Characters.Enemy
 {
     public class Enemy : EffectableCharacter
     {
+        public static UnityEvent<Guid> EnemyDied = new UnityEvent<Guid>();
         [SerializeField] public float damage;
         public Guid Id { get; private set; }
 
@@ -28,9 +29,8 @@ namespace Characters.Enemy
             {
                 for (int i = 0; i < StatusEffects.Count; i++)
                 {
-                    StatusEffects.RemoveAt(i);
                 }
-                
+                EnemyDied.Invoke(Id);
                 Destroy(gameObject);
             }
         }
