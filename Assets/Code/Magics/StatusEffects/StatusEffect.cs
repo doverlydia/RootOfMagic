@@ -16,11 +16,11 @@ namespace Magics.StatusEffects
         protected abstract UniTask Apply(EffectableCharacter target, EffectableCharacter source = null);
         public async UniTask ApplyEffect(EffectableCharacter target, EffectableCharacter source = null)
         {
-            var statusesOfSameType = target.StatusEffects.Where(x => x.GetType() == this.GetType());
+            var statusesOfSameType = target.StatusEffects.Where(x => x.GetType() == this.GetType()).ToList();
 
             if (statusesOfSameType.Count() > 0)
             {
-                for (int i = 0; i < statusesOfSameType.Count(); i++)
+                for (int i = statusesOfSameType.Count - 1; i >= 0; i--)
                 {
                     target.StatusEffects.RemoveAt(i);
                 }
