@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using System.Diagnostics;
+using UnityEngine;
 
 namespace Magics.StatusEffects
 {
@@ -21,7 +21,7 @@ namespace Magics.StatusEffects
               {
                   do
                   {
-                      Stopwatch sw = new Stopwatch();
+                      System.Diagnostics.Stopwatch sw = new ();
                       timeSinceStarted += sw.ElapsedMilliseconds;
                       sw.Start();
                       await UniTask.DelayFrame(1);
@@ -40,6 +40,7 @@ namespace Magics.StatusEffects
                 }
 
                 target.CurrentHp -= _damagePerTick;
+                Debug.Log($"{target.gameObject.name} : {target.CurrentHp}");
                 await UniTask.Delay(1000 / _ticksPerSecond);
             } while (!Token.IsCancellationRequested);
         }
