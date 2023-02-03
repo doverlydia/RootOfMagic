@@ -5,6 +5,7 @@ using Magics.StatusEffects;
 using Notification;
 using Player;
 using Runes;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Magics
 {
     public class MagicController : MonoBehaviour
     {
+        List<Magic> magics = new();
         private void Start()
         {
             PlayerInputController.Instance.NewMagicCreated.AddListener(OnNewMagicCreated);
@@ -21,7 +23,7 @@ namespace Magics
         private async void OnNewMagicCreated(MagicNotification notification)
         {
             var magic = GetNewMagic(notification);
-
+            magics.Add(magic);
             long duration = 0;
             foreach (var op in magic.Pattern.FindInRangeEffectables())
             {
@@ -93,6 +95,14 @@ namespace Magics
                     return garlic;
             }
             return null;
+        }
+
+        private void OnDrawGizmos()
+        {
+            foreach (var magic in magics)
+            {
+                Gizmos.DrawWireSphere(magic.Pattern.Pivot.position, magic.Pattern.Radius);
+            }
         }
     }
 }
