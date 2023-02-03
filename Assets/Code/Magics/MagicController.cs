@@ -12,7 +12,7 @@ namespace Magics
 {
     public class MagicController : MonoBehaviour
     {
-        private void Awake()
+        private void Start()
         {
             PlayerInputController.Instance.NewMagicCreated.AddListener(OnNewMagicCreated);
         }
@@ -28,7 +28,9 @@ namespace Magics
 
         private Magic GetNewMagic(MagicNotification notification)
         {
-            return new Magic(GetNewPattern(notification.PatternType), GetNewStatusEffect(notification.StatusEffectType));
+            var pattern = GetNewPattern(notification.PatternType);
+            return new Magic(pattern, GetNewStatusEffect(notification.StatusEffectType));
+            
         }
 
         private StatusEffect GetNewStatusEffect(StatusEffectType type)
@@ -50,11 +52,17 @@ namespace Magics
             switch (type)
             {
                 case PatternType.Beam:
-                    return new Beam(3, 3);
+                    var beam = new Beam(3, 3);
+                    beam.SetPatternPivot(PlayerController.Instance.transform);
+                    return beam;
                 case PatternType.Companion:
-                    return new Companion(3, 3);
+                    var companion= new Companion(3, 3);
+                    companion.SetPatternPivot(PlayerController.Instance.transform);
+                    return companion;
                 case PatternType.DamageField:
-                    return new Garlic(3, 3);
+                    var garlic= new Garlic(3, 3);
+                    garlic.SetPatternPivot(PlayerController.Instance.transform);
+                    return garlic;
             }
             return null;
         }

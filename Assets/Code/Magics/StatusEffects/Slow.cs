@@ -17,7 +17,7 @@ namespace Magics.StatusEffects
             target.SpeedModifier *= _speedModifier;
 
             float timeSinceStarted = 0;
-            UniTask.RunOnThreadPool(async () =>
+            await UniTask.RunOnThreadPool(async () =>
             {
                 do
                 {

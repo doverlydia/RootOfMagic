@@ -23,5 +23,10 @@ namespace Magics.StatusEffects
         {
             e.Value.CancellationTokenSource.Cancel();
         }
+        
+        public void SetMovement(Vector2 direction)
+        {
+            transform.Translate(_speed * Time.deltaTime * direction);
+        }
     }
 }
