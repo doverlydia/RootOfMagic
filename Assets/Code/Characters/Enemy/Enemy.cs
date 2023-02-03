@@ -26,10 +26,11 @@ namespace Characters.Enemy
         {
             if (CurrentHp < 0)
             {
-                foreach (var status in StatusEffects)
+                for (int i = 0; i < StatusEffects.Count; i++)
                 {
-                    StatusEffects.Remove(status);
+                    StatusEffects.RemoveAt(i);
                 }
+                
                 Destroy(gameObject);
             }
         }
