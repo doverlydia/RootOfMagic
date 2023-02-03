@@ -1,14 +1,12 @@
-using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 
 namespace Characters.Player
 {
-    public class PlayerController : CharacterController
+    public class PlayerController : EffectableCharacter
     {
         protected void SetMovement(Vector2 direction)
         {
-            transform.Translate(_speed * Time.deltaTime * direction);
+            transform.Translate(_actualSpeed * Time.deltaTime * direction);
         }
 
         private void Update()
