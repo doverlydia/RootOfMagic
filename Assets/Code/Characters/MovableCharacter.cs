@@ -10,6 +10,7 @@ namespace Characters
         private Rigidbody2D _rb;
 
         private Vector2 _velocity;
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
