@@ -1,6 +1,5 @@
 using Characters;
 using Cysharp.Threading.Tasks;
-using System.Diagnostics.Contracts;
 using System.Threading;
 
 namespace Magics.StatusEffects
