@@ -22,24 +22,24 @@ public class RuneSystem : MonoBehaviour
         // Just cloning so we won't change the original syllables
         var unusedSyllables = syllables.availableSyllables.ToList();
 
-        var rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffect.DamageOverTime, ProjectilePattern.Beam);
+        var rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffectTypes.DamageOverTime, MagicPatternTypes.Beam);
         runes.Add(rune.Syllable, rune);
 
-        rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffect.Slow, ProjectilePattern.DamageField);
+        rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffectTypes.Slow, MagicPatternTypes.DamageField);
         runes.Add(rune.Syllable, rune);
 
-        rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffect.Leech, ProjectilePattern.Companion);
+        rune = GenerateRuneWithRandomSyllable(unusedSyllables, StatusEffectTypes.Leech, MagicPatternTypes.Companion);
         runes.Add(rune.Syllable, rune);
     }
 
-    private Rune GenerateRuneWithRandomSyllable(List<string> unusedSyllables, StatusEffect statusEffect, ProjectilePattern projectilePattern)
+    private Rune GenerateRuneWithRandomSyllable(List<string> unusedSyllables, StatusEffectTypes statusEffect, MagicPatternTypes magicPattern)
     {
         var syllableToUse = unusedSyllables.RemoveRandom();
         return new Rune()
         {
             Syllable = syllableToUse,
             StatusEffect = statusEffect,
-            ProjectilePattern = projectilePattern
+            magicPattern = magicPattern
         };
     }
 
@@ -48,7 +48,7 @@ public class RuneSystem : MonoBehaviour
         var output = "Runes dict: \n";
         foreach (var rune in runes)
         {
-            output += $"{rune.Key} : {rune.Value.Syllable}, {rune.Value.ProjectilePattern}, {rune.Value.StatusEffect} \n";
+            output += $"{rune.Key} : {rune.Value.Syllable}, {rune.Value.magicPattern}, {rune.Value.StatusEffect} \n";
         }
         
         Debug.Log(output);
@@ -57,18 +57,18 @@ public class RuneSystem : MonoBehaviour
     public class Rune
     {
         public string Syllable;
-        public StatusEffect StatusEffect;
-        public ProjectilePattern ProjectilePattern;
+        public StatusEffectTypes StatusEffect;
+        public MagicPatternTypes magicPattern;
     }
 
-    public enum StatusEffect
+    public enum StatusEffectTypes
     {
         DamageOverTime,
         Slow,
         Leech
     }
 
-    public enum ProjectilePattern
+    public enum MagicPatternTypes
     {
         Beam,
         Companion,
