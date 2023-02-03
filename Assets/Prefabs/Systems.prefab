@@ -124,9 +124,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  _enemyPrefab: {fileID: 0}
-  _spawnTickRateInSeconds: 0
-  _baseSpawnAmount: 0
+  _enemyPrefab: {fileID: 8343441789955522716, guid: 609054c05e6d6fd40bb32eee3b0e0b4b, type: 3}
+  _spawnTickRateInSeconds: 1.5
+  _baseSpawnAmount: 4
+  _maxEnemyCount: 30
+  enemyBaseHp: 10
+  enemyBaseDamage: 3
 --- !u!1 &5750975122396036699
 GameObject:
   m_ObjectHideFlags: 0
