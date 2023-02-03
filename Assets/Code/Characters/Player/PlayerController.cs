@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Characters.Player
 {
-    public class PlayerView : CharacterView
+    public class PlayerController : CharacterController
     {
         protected void SetMovement(Vector2 direction)
         {
-            transform.Translate(_characterData.Speed.Value * Time.deltaTime * direction);
+            transform.Translate(_speed * Time.deltaTime * direction);
         }
 
         private void Update()

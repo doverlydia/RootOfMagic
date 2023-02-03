@@ -5,10 +5,10 @@ using UniRx;
 using UnityEngine;
 namespace Characters
 {
-    public abstract class CharacterController : IEffectable
+    public abstract class CharacterController : MonoBehaviour, IEffectable
     {
-        [SerializeField] private float _speed;
-        [SerializeField] private float _hp;
+        [SerializeField] protected float _speed;
+        [SerializeField] protected float _hp;
 
         public ReactiveCollection<StatusEffectData> CurrentStatusEffects { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
@@ -18,8 +18,14 @@ namespace Characters
             throw new System.NotImplementedException();
         }
 
+        public UniTask ApplyEffect(StatusEffectData data)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void RemoveEffect(StatusEffectData data)
         {
         }
+
     }
 }
