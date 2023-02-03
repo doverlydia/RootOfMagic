@@ -1,4 +1,4 @@
-﻿namespace Code.Runes
+﻿namespace Runes
 {
     public enum StatusEffectType
     {

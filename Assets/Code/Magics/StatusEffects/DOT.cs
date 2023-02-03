@@ -1,4 +1,3 @@
-using Characters;
 using Cysharp.Threading.Tasks;
 using System.Diagnostics;
 
@@ -8,7 +7,14 @@ namespace Magics.StatusEffects
     {
         private int _ticksPerSecond;
         private float _damagePerTick;
-        public override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
+
+        public DOT(float durationInSeconds, int ticksPerSecond, float damagePerTick) : base(durationInSeconds)
+        {
+            _ticksPerSecond = ticksPerSecond;
+            _damagePerTick = damagePerTick;
+        }
+
+        protected override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
         {
             float timeSinceStarted = 0;
             UniTask.RunOnThreadPool(async () =>
@@ -20,7 +26,7 @@ namespace Magics.StatusEffects
                       sw.Start();
                       await UniTask.DelayFrame(1);
                       sw.Stop();
-                  } while (timeSinceStarted < DurationInSeconds);
+                  } while (timeSinceStarted < _durationInSeconds);
 
                   CancellationTokenSource.Cancel();
 

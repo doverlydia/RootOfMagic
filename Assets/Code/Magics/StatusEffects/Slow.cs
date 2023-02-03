@@ -1,4 +1,3 @@
-using Characters;
 using Cysharp.Threading.Tasks;
 using System.Diagnostics;
 
@@ -7,7 +6,13 @@ namespace Magics.StatusEffects
     public class Slow : StatusEffect
     {
         private float _speedModifier;
-        public override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
+
+        public Slow(float durationInSeconds, float speedModifier) : base(durationInSeconds)
+        {
+            _speedModifier = speedModifier;
+        }
+
+        protected override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
         {
             target.SpeedModifier *= _speedModifier;
 
@@ -21,7 +26,7 @@ namespace Magics.StatusEffects
                     sw.Start();
                     await UniTask.DelayFrame(1);
                     sw.Stop();
-                } while (timeSinceStarted < DurationInSeconds);
+                } while (timeSinceStarted < _durationInSeconds);
 
                 CancellationTokenSource.Cancel();
 

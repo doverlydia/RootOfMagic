@@ -1,16 +1,21 @@
-using Characters;
 using Cysharp.Threading.Tasks;
-using System.Diagnostics;
 
 namespace Magics.StatusEffects
 {
     public class Leech : StatusEffect
     {
         private float _hpRegain;
-        public override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
+
+        public Leech(float durationInSeconds, float hpRegain) : base(durationInSeconds)
+        {
+            _hpRegain = hpRegain;
+        }
+
+        protected override UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
         {
             source.Hp += _hpRegain;
             target.Hp -= _hpRegain;
+            return UniTask.CompletedTask;
         }
     }
 }

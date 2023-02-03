@@ -1,6 +1,6 @@
-using Code.Runes;
+using Runes;
 
-namespace Code.Notification
+namespace Notification
 {
     public record MagicNotification
     {

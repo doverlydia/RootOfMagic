@@ -1,4 +1,4 @@
-﻿namespace Code.Runes
+﻿namespace Runes
 {
     public class Rune
     {
