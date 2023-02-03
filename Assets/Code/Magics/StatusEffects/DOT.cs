@@ -11,7 +11,7 @@ namespace Magics.StatusEffects
         public override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
         {
             float timeSinceStarted = 0;
-            UniTask.RunOnThreadPool(async () =>
+            await UniTask.RunOnThreadPool(async () =>
               {
                   do
                   {
