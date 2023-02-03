@@ -20,9 +20,9 @@ namespace Magics.StatusEffects
 
             if (statusesOfSameType.Count() > 0)
             {
-                foreach (var status in statusesOfSameType)
+                for (int i = 0; i < statusesOfSameType.Count(); i++)
                 {
-                    target.StatusEffects.Remove(status);
+                    target.StatusEffects.RemoveAt(i);
                 }
             }
 
