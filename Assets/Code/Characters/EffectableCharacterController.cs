@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine;
 namespace Characters
 {
-    public abstract class CharacterController : MonoBehaviour, IEffectable
+    public abstract class EffectableCharacterController : MonoBehaviour, IEffectable
     {
         [SerializeField] protected float _speed;
         [SerializeField] protected float _hp;

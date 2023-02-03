@@ -1,10 +1,8 @@
-using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 
 namespace Characters.Player
 {
-    public class PlayerController : CharacterController
+    public class PlayerController : EffectableCharacterController
     {
         protected void SetMovement(Vector2 direction)
         {
