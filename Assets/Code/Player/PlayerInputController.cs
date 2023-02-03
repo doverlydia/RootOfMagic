@@ -78,6 +78,7 @@ namespace Code.Player
                     || _runesController.RunesSecondLetter.Value.Contains(keyCode) && _inputSequence.Count % 2 == 1)
                 {
                     _inputSequence.Add(keyCode.ToString());
+                    continue;
                 }
 
                 _inputSequence.Clear();
