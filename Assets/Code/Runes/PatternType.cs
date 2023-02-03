@@ -1,6 +1,6 @@
 ﻿namespace Code.Runes
 {
-    public enum ProjectilePattern
+    public enum PatternType
     {
         Beam,
         Companion,

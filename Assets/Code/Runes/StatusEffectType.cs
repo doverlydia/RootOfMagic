@@ -1,6 +1,6 @@
 ﻿namespace Code.Runes
 {
-    public enum StatusEffect
+    public enum StatusEffectType
     {
         DamageOverTime,
         Slow,

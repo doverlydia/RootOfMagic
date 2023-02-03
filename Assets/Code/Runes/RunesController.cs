@@ -10,26 +10,34 @@ namespace Code.Runes
     {
         [SerializeField] private SyllablesScriptableObject syllables;
 
+        [SerializeField] private List<(StatusEffectType statusEffect, PatternType pattern)> _runeCombinations =
+            new()
+            {
+                (StatusEffectType.DamageOverTime, PatternType.Beam),
+                (StatusEffectType.Slow, PatternType.DamageField),
+                (StatusEffectType.Leech, PatternType.Companion)
+            };
+
         private Dictionary<string, Rune> _runes = new();
-        private HashSet<char> _usedLetters;
+        public Lazy<HashSet<KeyCode>> RunesFirstLetter { get; private set; }
+        public Lazy<HashSet<KeyCode>> RunesSecondLetter { get; private set; }
 
         public IEnumerable<Rune> GetRunes()
         {
             return _runes.Values;
         }
 
-        public HashSet<char> GetLetters()
-        {
-            if (_usedLetters == null)
-            {
-                _usedLetters = _runes.Keys.SelectMany(syllable => syllable.ToCharArray()).ToHashSet();
-            }
-            return _usedLetters;
-        }
-
         protected void Awake()
         {
             InitRunes();
+            RunesFirstLetter = new Lazy<HashSet<KeyCode>>(() =>
+            {
+                return _runes.Keys.Select(syllable =>(KeyCode)Enum.Parse(typeof(KeyCode),  syllable.Substring(0,1))).ToHashSet();
+            });
+            RunesSecondLetter = new Lazy<HashSet<KeyCode>>(() =>
+            {
+                return _runes.Keys.Select(syllable => (KeyCode)Enum.Parse(typeof(KeyCode),  syllable.Substring(1,1))).ToHashSet();;
+            });
 
 #if UNITY_EDITOR
             PrintRunes();
@@ -38,23 +46,17 @@ namespace Code.Runes
 
         private void InitRunes()
         {
-            var magics = new List<(StatusEffect statusEffect, ProjectilePattern pattern)>()
+           
+            var selectedSyllables = SelectSyllables(syllables.availableSyllables, _runeCombinations.Count);
+            for (int i = 0; i < _runeCombinations.Count; i++)
             {
-                new (StatusEffect.DamageOverTime, ProjectilePattern.Beam),
-                new (StatusEffect.Slow, ProjectilePattern.DamageField),
-                new (StatusEffect.Leech, ProjectilePattern.Companion),
-                    
-            };
-            var selectedSyllables = SelectSyllables(syllables.availableSyllables, magics.Count);
-            for (int i = 0; i < magics.Count; i++)
-            {
-                var magic = magics[i];
+                var magic = _runeCombinations[i];
                 var syllable = selectedSyllables[i];
                 _runes[syllable] = new Rune
                 {
                     Syllable = syllable,
-                    StatusEffect = magic.statusEffect,
-                    ProjectilePattern = magic.pattern
+                    statusEffectType = magic.statusEffect,
+                    patternType = magic.pattern
                 };
                 
             }
@@ -92,7 +94,7 @@ namespace Code.Runes
             foreach (var rune in _runes)
             {
                 output +=
-                    $"{rune.Key} : {rune.Value.Syllable}, {rune.Value.ProjectilePattern}, {rune.Value.StatusEffect} \n";
+                    $"{rune.Key} : {rune.Value.Syllable}, {rune.Value.patternType}, {rune.Value.statusEffectType} \n";
             }
 
             Debug.Log(output);

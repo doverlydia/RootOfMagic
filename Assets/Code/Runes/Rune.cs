@@ -3,7 +3,7 @@
     public class Rune
     {
         public string Syllable;
-        public StatusEffect StatusEffect;
-        public ProjectilePattern ProjectilePattern;
+        public StatusEffectType statusEffectType;
+        public PatternType patternType;
     }
 }

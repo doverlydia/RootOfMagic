@@ -1,67 +1,90 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Code.Extensions;
+using Code.Notification;
 using Code.Runes;
+using UniRx;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
+using UnityEngine.Events;
+
 
 namespace Code.Player
 {
     public class PlayerInputController : MonoBehaviour
     {
         [SerializeField] private RunesController _runesController;
-        private InputAction  _runeLetterPressed;
-        private List<string> _inputSequence = new List<string>();
-        private HashSet<KeyCode> _acceptableInputs = new HashSet<KeyCode>();
+        private ReactiveCollection<string> _inputSequence = new();
+
+        public UnityEvent<string> NewUserInputState = new ();
+        // new Megic created event
+        public UnityEvent<MagicNotification> NewMagicCreated = new ();
 
         private void Awake()
         {
-            
+            _inputSequence.ObserveCountChanged().Subscribe(OnInputSequenceChanged);
+            _inputSequence.ObserveAdd().Subscribe(OnInputSequenceGrew);
         }
 
-        private void Start()
+        private void OnInputSequenceChanged(int count)
         {
-            RebindRuneControls();
-            _acceptableInputs = _runesController.GetLetters()
-                .Select(c=>(KeyCode)Enum.Parse(typeof(KeyCode),$"{c}"))
-                .Append(KeyCode.UpArrow)
-                .Append(KeyCode.DownArrow)
-                .Append(KeyCode.LeftArrow)
-                .Append(KeyCode.RightArrow)
-                .ToHashSet();
-            
+            var sequenceString = string.Join("",_inputSequence.ToList());
+            NewUserInputState.Invoke(sequenceString);
+            print($"changed: {string.Join("",_inputSequence)}");
         }
+
+        private void OnInputSequenceGrew(CollectionAddEvent<string> addEvent)
+        {
+            if (_inputSequence.Count == 1)
+            {
+                return;
+            }
+
+
+            for (int i = 0; i < _inputSequence.Count - 1; i+=2)
+            {
+                string currentLetter = _inputSequence[i];
+                string nextLetter = _inputSequence[i + 1];
+                var syllable = currentLetter + nextLetter;
+                if (!_runesController.GetRunes().Any(r => String.Equals(r.Syllable, syllable, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    _inputSequence.Clear();
+                    return;
+                }
+            }
+            if (_inputSequence.Count == 4)
+            {
+                var sequenceString = string.Join("",_inputSequence.ToList());
+                var rune1Syllable = sequenceString.Substring(0,2);
+                var rune2Syllable = sequenceString.Substring(2,2);
+                var rune1 = _runesController.GetRunes().First(r => string.Equals(r.Syllable, rune1Syllable, StringComparison.CurrentCultureIgnoreCase));
+                var rune2 = _runesController.GetRunes().First(r => string.Equals(r.Syllable, rune2Syllable, StringComparison.CurrentCultureIgnoreCase));
+                NewMagicCreated.Invoke(new MagicNotification (rune1.patternType, rune2.statusEffectType));
+                _inputSequence.Clear();
+            }
+        }
+        
 
         private void Update()
         {
             foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
+            {
+
+                if (!Input.GetKeyDown(keyCode) || keyCode.IsArrowKey() || keyCode.IsUtilityKey())
                 {
-                    if (Input.GetKeyDown(keyCode) && !_acceptableInputs.Contains(keyCode))
-                    {
-                        _inputSequence.Clear();
-                    }
+                    continue;
                 }
 
-            print($"input queue: {string.Join(", ", _inputSequence)}");
-        }
+                if (_runesController.RunesFirstLetter.Value.Contains(keyCode) && _inputSequence.Count % 2 == 0 
+                    || _runesController.RunesSecondLetter.Value.Contains(keyCode) && _inputSequence.Count % 2 == 1)
+                {
+                    _inputSequence.Add(keyCode.ToString());
+                }
 
-        private void RebindRuneControls()
-        {
-            var map = new InputActionMap("Gameplay");
-            _runeLetterPressed = map.AddAction("RuneLetterPressed");
-            foreach (var letter in _runesController.GetLetters())
-            {
-                _runeLetterPressed.AddBinding($"<Keyboard>/{letter.ToString().ToLower()}");
+                _inputSequence.Clear();
+                break;
+
             }
-            _runeLetterPressed.Enable();
-            _runeLetterPressed.started += OnRuneLetterPressed;
 
-        }
-
-        void OnRuneLetterPressed(InputAction.CallbackContext callbackContext)
-        {
-            _inputSequence.Add(callbackContext.control.displayName);
         }
 
        
