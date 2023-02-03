@@ -40,5 +40,12 @@ namespace Magics.Patterns
         {
             _pivot = pivot;
         }
+
+        private void OnDrawGizmos()
+        {
+            UnityEditor.Handles.color = Color.yellow;
+
+            UnityEditor.Handles.DrawWireDisc(_pivot.position, Vector3.back,_radius);
+        }
     }
 }
