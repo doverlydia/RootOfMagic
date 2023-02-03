@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Magics.StatusEffects;
 using UnityEngine;
-
-namespace Characters
+namespace Characters.Enemy
 {
     public class Enemy : EffectableCharacter
     {
@@ -14,8 +14,18 @@ namespace Characters
         {
             Id = Guid.NewGuid();
         }
-        
-        
+
+        private void Update()
+        {
+            if (Hp < 0)
+            {
+                foreach (var status in StatusEffects)
+                {
+                    StatusEffects.Remove(status);
+                }
+                Destroy(gameObject);
+            }
+        }
     }
 }
 

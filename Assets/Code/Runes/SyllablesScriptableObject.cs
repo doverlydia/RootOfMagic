@@ -1,7 +1,10 @@
 using UnityEngine;
-
-[CreateAssetMenu(fileName = "SyllablesScriptableObject", menuName = "ScriptableObjects/SyllablesScriptableObject")]
-public class SyllablesScriptableObject : ScriptableObject
+namespace Runes
 {
-    public string[] availableSyllables;
+
+    [CreateAssetMenu(fileName = "SyllablesScriptableObject", menuName = "ScriptableObjects/SyllablesScriptableObject")]
+    public class SyllablesScriptableObject : ScriptableObject
+    {
+        public string[] availableSyllables;
+    }
 }

@@ -1,10 +1,7 @@
-﻿
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using UnityEditor.Playables;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Code.Extensions
+namespace Extensions
 {
     public static class KeycodeExtensions
     {
@@ -21,9 +18,9 @@ namespace Code.Extensions
                     KeyCode.DownArrow,
                     KeyCode.LeftArrow,
                     KeyCode.RightArrow
-                    
+
                 };
-            return arrowKeys.Contains(code);   
+            return arrowKeys.Contains(code);
         }
 
         public static bool IsUtilityKey(this KeyCode code)
@@ -37,7 +34,7 @@ namespace Code.Extensions
                 KeyCode.Mouse4,
                 KeyCode.Mouse5,
                 KeyCode.Escape
-                    
+
             };
             return arrowKeys.Contains(code);
         }

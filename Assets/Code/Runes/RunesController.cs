@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Code.Runes
+namespace Runes
 {
     public class RunesController : MonoBehaviour
     {
