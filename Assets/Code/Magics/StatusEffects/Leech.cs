@@ -1,21 +1,17 @@
-using Cysharp.Threading.Tasks;
+using Characters;
+using Characters.Player;
+using UnityEngine;
 
 namespace Magics.StatusEffects
 {
     public class Leech : StatusEffect
     {
-        private float _hpRegain;
-
-        public Leech(float durationInSeconds, float hpRegain) : base(durationInSeconds)
+        [SerializeField] float _damagePerTick;
+        public override void Effect(EffectableCharacter target)
         {
-            _hpRegain = hpRegain;
-        }
-
-        protected override UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
-        {
-            source.CurrentHp += _hpRegain;
-            target.CurrentHp -= _hpRegain;
-            return UniTask.CompletedTask;
+            base.Effect(target);
+            PlayerController.Instance.CurrentHp += _damagePerTick;
+            target.CurrentHp -= _damagePerTick;
         }
     }
 }

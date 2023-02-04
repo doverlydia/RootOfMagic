@@ -1,34 +1,45 @@
-using Cysharp.Threading.Tasks;
+using Characters;
+using Interfaces;
 using System.Linq;
-using System.Threading;
+using UnityEngine;
 
 namespace Magics.StatusEffects
 {
-    public abstract class StatusEffect
+    public abstract class StatusEffect : MonoBehaviour, IStatusEffect
     {
-        public StatusEffect(float durationInSeconds)
+        [SerializeField] float _duration;
+        [SerializeField] float _damageMultiplier;
+        [SerializeField] float _tickRate;
+        private float _deltaTick => 1 / _tickRate;
+        protected EffectableCharacter _target;
+        public virtual void Effect(EffectableCharacter target)
         {
-            _durationInSeconds = durationInSeconds;
-        }
-        protected float _durationInSeconds;
-        public CancellationTokenSource CancellationTokenSource = new();
-        public CancellationToken Token => CancellationTokenSource.Token;
-        protected abstract UniTask Apply(EffectableCharacter target, EffectableCharacter source = null);
-        public async UniTask ApplyEffect(EffectableCharacter target, EffectableCharacter source = null)
-        {
-            var statusesOfSameType = target.StatusEffects.Where(x => x.GetType() == this.GetType());
-
-            if (statusesOfSameType.Count() > 0)
+            var sameEffects = target.StatusEffects.Where(x => x.GetType() == this.GetType()).ToList();
+            if (sameEffects.Count > 0)
             {
-                for (int i = 0; i < statusesOfSameType.Count(); i++)
+                for (int i = sameEffects.Count; i < 0; i--)
                 {
                     target.StatusEffects.RemoveAt(i);
                 }
             }
-
             target.StatusEffects.Add(this);
-            await Apply(target, source);
-            target.StatusEffects.Remove(this);
+        }
+        public void Update()
+        {
+            if (_target == null) Destroy(this.gameObject);
+            if (_duration > 0)
+            {
+                _duration -= Time.deltaTime;
+                if (_duration % _deltaTick <= 1)
+                {
+                    Effect(_target);
+                }
+            }
+            else
+            {
+                _target.StatusEffects.Remove(this);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

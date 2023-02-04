@@ -1,4 +1,6 @@
-using Magics.StatusEffects;
+using Notification;
+using Player;
+using Runes;
 using UnityEngine;
 
 namespace Characters.Player
@@ -17,7 +19,7 @@ namespace Characters.Player
                 Instance = this;
             }
         }
-
+     
         private void Update()
         {
             SetMovement(new Vector2(Input.GetAxisRaw("Horizontal"),

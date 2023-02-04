@@ -1,48 +1,23 @@
 using Magics.StatusEffects;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 
 namespace Magics.Patterns
 {
-    public abstract class Pattern
+    public abstract class Pattern : MonoBehaviour
     {
-        public float Duration;
-        public int TicksPerSecond;
-        public Transform Pivot { get; private set; }
-        public float Radius { get; private set; }
-        
-        public float Angle { get; private set; }
-        public Pattern(float angle, float radius, float duration, int ticksPerSecond)
+        public FloatReactiveProperty Duration;
+
+        [SerializeField] protected int _ticksPerSecond;
+        [SerializeField] protected Collider2D _aoe;
+        [SerializeField] protected float _baseDamage;
+        public abstract void MoveLogic(Transform pivot);
+        public virtual void Update()
         {
-            Angle = angle;
-            Radius = radius;
-            Duration = duration;
-            TicksPerSecond = ticksPerSecond;
-        }
 
-        public List<EffectableCharacter> FindInRangeEffectables()
-        {
-            var cols = Physics2D.OverlapCircleAll(Pivot.position, Radius);
-            List<EffectableCharacter> results = new();
-            foreach (Collider2D collider in cols)
-            {
-                if (!collider.TryGetComponent(out EffectableCharacter ec)) continue;
-
-                var characterToCollider = (collider.transform.position - Pivot.position).normalized;
-                var dot = Vector3.Dot(characterToCollider, Vector2.up);
-                if (!(dot >= Mathf.Cos(Angle / 2))) continue;
-
-                results.Add(ec);
-            }
-
-            Debug.Log(string.Join(", ", results.Select(r => $"name: {r.name}")));
-            return results;
-        }
-
-        public void SetPatternPivot(Transform pivot)
-        {
-            this.Pivot = pivot;
+            Debug.Log("i happen mi perent");
         }
     }
 }

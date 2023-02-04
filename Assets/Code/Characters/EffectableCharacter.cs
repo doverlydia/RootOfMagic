@@ -1,13 +1,14 @@
-using System.Collections.Generic;
-using UnityEngine;
 using UniRx;
-namespace Magics.StatusEffects
+using UnityEngine;
+using Interfaces;
+
+namespace Characters
 {
     public abstract class EffectableCharacter : MonoBehaviour
     {
         public float SpeedModifier = 1;
         public float CurrentHp;
-        public ReactiveCollection<StatusEffect> StatusEffects = new();
+        public ReactiveCollection<IStatusEffect> StatusEffects = new();
 
         [SerializeField] protected float speed;
         [SerializeField] protected float maxHp;
@@ -19,11 +20,11 @@ namespace Magics.StatusEffects
             StatusEffects.ObserveRemove().Subscribe(OnEffectRemoved);
         }
 
-        public void OnEffectRemoved(CollectionRemoveEvent<StatusEffect> e)
+        public void OnEffectRemoved(CollectionRemoveEvent<IStatusEffect> e)
         {
-            e.Value.CancellationTokenSource.Cancel();
+            Destroy((e.Value as MonoBehaviour).gameObject);
         }
-        
+
         public void SetMovement(Vector2 direction)
         {
             transform.Translate(ActualSpeed * Time.deltaTime * direction);
