@@ -16,6 +16,7 @@ namespace Characters.Player
         [SerializeField] private float _cooldown;
         public UnityEvent PlayerTookDamage = new();
         public UnityEvent PlayerDead = new();
+        bool isDead;
         public static PlayerController Instance { get; private set; }
         private void Awake()
         {
@@ -31,29 +32,29 @@ namespace Characters.Player
 
         private void Update()
         {
-            if (CurrentHp > 0)
+            if (!isDead)
             {
                 SetMovement(new Vector2(Input.GetAxisRaw("Horizontal"),
                                         Input.GetAxisRaw("Vertical"))
                                         .normalized);
-                if (_cooldown > 0) return;
+                _cooldown -= Time.deltaTime;
 
-                Collider2D[] cols = new Collider2D[] { };
-                var colsCount = Physics2D.OverlapCollider(_collider, new ContactFilter2D().NoFilter(), cols);
-                for (int i = colsCount; i < 0; i--)
-                {
-                    if (cols[i].TryGetComponent(out Enemy.Enemy enemy))
-                    {
-                        CurrentHp -= enemy.damage;
-                        _cooldown = _maxCooldown;
-                        PlayerTookDamage.Invoke();
-                    }
-                }
                 if (CurrentHp <= 0)
                 {
+                    isDead = true;
                     PlayerDead.Invoke();
                 }
-                _cooldown -= Time.deltaTime;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (_cooldown > 0) return;
+            if (collision.TryGetComponent(out Enemy.Enemy enemy))
+            {
+                CurrentHp -= enemy.damage;
+                _cooldown = _maxCooldown;
+                PlayerTookDamage.Invoke();
             }
         }
     }
