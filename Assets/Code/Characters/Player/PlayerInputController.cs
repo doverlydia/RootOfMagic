@@ -9,26 +9,20 @@ using UnityEngine.Events;
 
 namespace Player
 {
-    public class PlayerInputController : MonoBehaviour
+    public class PlayerInputController : SingletonMonoBehavior<PlayerInputController>
     {
-        [SerializeField] private RunesController _runesController;
         private ReactiveCollection<string> _inputSequence = new();
 
         public UnityEvent<string> NewUserInputState = new();
+        public UnityEvent<Rune> OnRuneCreated = new();
         // new Megic created event
         public UnityEvent<MagicNotification> NewMagicCreated = new();
-        public static PlayerInputController Instance { get; private set; }
 
-        private void Awake()
+        private RunesController _runesController => RunesController.Instance;
+        
+        protected override void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
+            base.Awake();
             _inputSequence.ObserveCountChanged().Subscribe(OnInputSequenceChanged);
             _inputSequence.ObserveAdd().Subscribe(OnInputSequenceGrew);
         }
@@ -64,8 +58,10 @@ namespace Player
                 var sequenceString = string.Join("", _inputSequence.ToList());
                 var rune1Syllable = sequenceString.Substring(0, 2);
                 var rune2Syllable = sequenceString.Substring(2, 2);
-                var rune1 = _runesController.GetRunes().First(r => string.Equals(r.Syllable, rune1Syllable, StringComparison.CurrentCultureIgnoreCase));
-                var rune2 = _runesController.GetRunes().First(r => string.Equals(r.Syllable, rune2Syllable, StringComparison.CurrentCultureIgnoreCase));
+                var rune1 = _runesController.GetRuneBySyllable(rune1Syllable);
+                var rune2 = _runesController.GetRuneBySyllable(rune2Syllable);
+                
+                NewUserInputState.Invoke(sequenceString);
                 NewMagicCreated.Invoke(new MagicNotification(rune1.patternType, rune2.statusEffectType));
                 _inputSequence.Clear();
             }

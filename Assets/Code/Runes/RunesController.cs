@@ -6,7 +6,7 @@ using Random = System.Random;
 
 namespace Runes
 {
-    public class RunesController : MonoBehaviour
+    public class RunesController : SingletonMonoBehavior<RunesController>
     {
         [SerializeField] private SyllablesScriptableObject syllables;
 
@@ -27,8 +27,14 @@ namespace Runes
             return _runes.Values;
         }
 
-        protected void Awake()
+        public Rune GetRuneBySyllable(string syllable)
         {
+            return _runes[syllable.ToUpper()];
+        } 
+
+        protected override void Awake()
+        {
+            base.Awake();
             InitRunes();
             RunesFirstLetter = new Lazy<HashSet<KeyCode>>(() =>
             {
