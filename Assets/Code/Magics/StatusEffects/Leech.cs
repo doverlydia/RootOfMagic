@@ -10,7 +10,7 @@ namespace Magics.StatusEffects
         public  override void ApplyEffect( )
         {
             base.ApplyEffect();
-            PlayerController.Instance.CurrentHp += _damagePerTick;
+            PlayerController.Instance.TryHeal((int)_damagePerTick);
             _target.CurrentHp -= _damagePerTick;
         }
 

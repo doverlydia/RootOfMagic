@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Characters.Enemy;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Characters.Enemy
@@ -16,6 +17,7 @@ namespace Characters.Enemy
     [SerializeField] private int _maxEnemyCount;
     [SerializeField] private float enemyBaseHp;
     [SerializeField] private float enemyBaseDamage;
+    [SerializeField] public UnityEvent waveSurvived = new();
     private Dictionary<Guid, Enemy> _enemies = new();
     private float _timePassed;
     private int _amountDied;
@@ -79,6 +81,7 @@ namespace Characters.Enemy
         
         _timePassed -= _spawnTickRateInSeconds;
         _wavesCompletedAmount++;
+        waveSurvived.Invoke();
     }
 
     private Vector3 GetSpawnPos()

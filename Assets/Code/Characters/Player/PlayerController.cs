@@ -1,8 +1,5 @@
+using System;
 using Characters.Enemy;
-using Notification;
-using Player;
-using Runes;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,13 +10,23 @@ namespace Characters.Player
         [SerializeField] private Collider2D _collider;
         [SerializeField] private float _maxDamagePerTick;
         [SerializeField] protected float _maxCooldown = 1;
+        [SerializeField] private int _MaxHpIncreaseAmount = 0;
         [SerializeField] private float _cooldown;
-        public UnityEvent PlayerTookDamage = new();
         public UnityEvent PlayerDead = new();
+        public UnityEvent<float,float> PlayerHealthChangedEvent = new();
         bool isDead;
         public static PlayerController Instance { get; private set; }
+
+        public void TryHeal(int healAmount)
+        {
+            CurrentHp = Math.Max(CurrentHp + healAmount, maxHp);
+            PlayerHealthChangedEvent.Invoke(CurrentHp,maxHp);
+        }
+        
+
         private void Awake()
         {
+            CurrentHp = maxHp;
             if (Instance != null && Instance != this)
             {
                 Destroy(this);
@@ -28,6 +35,11 @@ namespace Characters.Player
             {
                 Instance = this;
             }
+        }
+
+        private void Start()
+        {
+            EnemyController.Instance.waveSurvived.AddListener(OnWaveCompleted);
         }
 
         private void Update()
@@ -54,8 +66,15 @@ namespace Characters.Player
             {
                 CurrentHp -= enemy.damage;
                 _cooldown = _maxCooldown;
-                PlayerTookDamage.Invoke();
+                PlayerHealthChangedEvent.Invoke(CurrentHp,maxHp);
             }
+        }
+
+        private void OnWaveCompleted()
+        {
+            maxHp += _MaxHpIncreaseAmount;
+            CurrentHp = maxHp;
+            PlayerHealthChangedEvent.Invoke(CurrentHp,maxHp);
         }
     }
 }
