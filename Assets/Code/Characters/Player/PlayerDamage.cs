@@ -16,7 +16,7 @@ namespace Characters.Player
         {
             Cooldown -= Time.deltaTime;
 
-            if (PlayerController.Instance.CurrentHp <= 0)
+            if (PlayerController.Instance.CurrentHp.Value <= 0)
             {
                 IsDead = true;
                 PlayerDead.Invoke();
@@ -29,9 +29,9 @@ namespace Characters.Player
             if (Cooldown > 0) return;
             if (collision.TryGetComponent(out Enemy.Enemy enemy))
             {
-                PlayerController.Instance.CurrentHp -= enemy.damage;
+                PlayerController.Instance.CurrentHp.Value -= enemy.damage;
                 Cooldown = MaxCooldown;
-                player.PlayerHealthChangedEvent.Invoke(player.CurrentHp, player.maxHp);
+                player.PlayerHealthChangedEvent.Invoke(player.CurrentHp.Value, player.maxHp);
             }
         }
 

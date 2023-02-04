@@ -123,7 +123,7 @@ namespace Characters.Enemy
         enemy.damage = enemyBaseDamage * (1 + _wavesCompletedAmount / 10);
     }
 
-    void OnEnemyDied(Guid id)
+    void OnEnemyDied(Guid id, Vector3 pos)
     {
         _enemies.Remove(id);
     }

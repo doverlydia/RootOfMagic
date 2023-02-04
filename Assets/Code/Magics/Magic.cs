@@ -67,7 +67,7 @@ namespace Magics
 
         void ApplyDamage(Enemy enemy)
         {
-            enemy.CurrentHp -= Pattern.BaseDamage * statusEffect.DamageMultiplier;
+            enemy.CurrentHp.Value -= Pattern.BaseDamage * statusEffect.DamageMultiplier;
         }
 
         void ApplyStatusEffect(Enemy enemy)

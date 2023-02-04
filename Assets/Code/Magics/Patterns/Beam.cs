@@ -4,7 +4,6 @@ namespace Magics.Patterns
 {
     public class Beam : Pattern
     {
-        public Transform _pivot;
         public Vector3 targetAngle = new Vector3(0f, 345f, 0f);
         private Vector3 _currentAngle;
         [SerializeField] float speed = 5;
@@ -24,7 +23,7 @@ namespace Magics.Patterns
 
         public void Update()
         {
-            MoveLogic(_pivot);
+            MoveLogic(gameObject.transform);
         }
     }
 }

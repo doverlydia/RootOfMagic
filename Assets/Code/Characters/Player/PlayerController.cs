@@ -14,14 +14,14 @@ namespace Characters.Player
 
         public void TryHeal(int healAmount)
         {
-            CurrentHp = Math.Max(CurrentHp + healAmount, maxHp);
-            PlayerHealthChangedEvent.Invoke(CurrentHp,maxHp);
+            CurrentHp.Value = Math.Max(CurrentHp.Value + healAmount, maxHp);
+            PlayerHealthChangedEvent.Invoke(CurrentHp.Value, maxHp);
         }
         
 
         private void Awake()
         {
-            CurrentHp = maxHp;
+            CurrentHp.Value = maxHp;
             if (Instance != null && Instance != this)
             {
                 Destroy(this);
@@ -50,7 +50,7 @@ namespace Characters.Player
         private void OnWaveCompleted()
         {
             maxHp += _MaxHpIncreaseAmount;
-            CurrentHp = maxHp;
+            CurrentHp.Value = maxHp;
            
         }
     }
