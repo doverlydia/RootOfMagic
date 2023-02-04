@@ -12,7 +12,7 @@ namespace Characters
         public ReactiveCollection<StatusEffect> StatusEffects = new();
 
         [SerializeField] protected float speed;
-        [SerializeField] protected float maxHp;
+        [SerializeField] public float maxHp;
 
         protected float ActualSpeed => SpeedModifier * speed;
 

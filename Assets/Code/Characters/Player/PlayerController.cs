@@ -7,15 +7,10 @@ namespace Characters.Player
 {
     public class PlayerController : EffectableCharacter
     {
-        [SerializeField] private Collider2D _collider;
-        [SerializeField] private float _maxDamagePerTick;
-        [SerializeField] protected float _maxCooldown = 1;
-        [SerializeField] private int _MaxHpIncreaseAmount = 0;
-        [SerializeField] private float _cooldown;
-        public UnityEvent PlayerDead = new();
+        public PlayerDamage PlayerDamage = new ();
         public UnityEvent<float,float> PlayerHealthChangedEvent = new();
-        bool isDead;
         public static PlayerController Instance { get; private set; }
+        [SerializeField] private int _MaxHpIncreaseAmount = 0;
 
         public void TryHeal(int healAmount)
         {
@@ -44,29 +39,11 @@ namespace Characters.Player
 
         private void Update()
         {
-            if (!isDead)
+            if (!PlayerDamage.IsDead)
             {
                 SetMovement(new Vector2(Input.GetAxisRaw("Horizontal"),
                                         Input.GetAxisRaw("Vertical"))
                                         .normalized);
-                _cooldown -= Time.deltaTime;
-
-                if (CurrentHp <= 0)
-                {
-                    isDead = true;
-                    PlayerDead.Invoke();
-                }
-            }
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (_cooldown > 0) return;
-            if (collision.TryGetComponent(out Enemy.Enemy enemy))
-            {
-                CurrentHp -= enemy.damage;
-                _cooldown = _maxCooldown;
-                PlayerHealthChangedEvent.Invoke(CurrentHp,maxHp);
             }
         }
 
@@ -74,7 +51,7 @@ namespace Characters.Player
         {
             maxHp += _MaxHpIncreaseAmount;
             CurrentHp = maxHp;
-            PlayerHealthChangedEvent.Invoke(CurrentHp,maxHp);
+           
         }
     }
 }
