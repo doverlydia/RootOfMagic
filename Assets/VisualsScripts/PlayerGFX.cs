@@ -2,12 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Characters.Player;
+using Notification;
+using Player;
 
 public class PlayerGFX : MonoBehaviour
 {
     [SerializeField] private Texture[] playerFaceSprites;
     [SerializeField] private SpriteRenderer SR;
+    [SerializeField] private float hurtFaceDuration = 2f;
+    [SerializeField] private float happyFaceDuration = 1.5f;
+    [SerializeField] private Color hurtColor;
+    [SerializeField] private float hurtEffectDuration;
     Tween playerFaceTimerTween;
+    private float lastHealthAmount;
+
+    private void Start()
+    {
+        PlayerController.Instance.PlayerHealthChangedEvent.AddListener(UpdateLocalPlayerHealth);
+        PlayerInputController.Instance.NewMagicCreated.AddListener(FaceChangeByMagic);
+        lastHealthAmount = PlayerController.Instance.CurrentHp.Value;
+    }
+
+    private void UpdateLocalPlayerHealth(float newHealth, float newMaxHp)
+    {
+        if(lastHealthAmount > newHealth)
+        {
+            //Player was hurt
+            PlayerHurtGFX();
+        }
+    }
+
+    private void PlayerHurtGFX()
+    {
+        PlayerDoFace(PlayerFace.Angry, hurtFaceDuration);
+
+        DOTWeenCustom.SquashNStretch(transform, new Vector2(1.2f, 0.8f), hurtEffectDuration, true);
+        SR.DOColor(hurtColor, hurtEffectDuration / 2f).SetLoops(2, LoopType.Yoyo);
+    }
+
+    private void FaceChangeByMagic(MagicNotification notification)
+    {
+        //if(notification.PatternType == Runes.PatternType.Beam)
+       // {
+            PlayerDoFace(PlayerFace.Smile, happyFaceDuration);
+        //}
+    }
 
     private Texture FaceToTexture(PlayerFace face)
     {

@@ -9,7 +9,7 @@ namespace Characters.Enemy
     {
         public static UnityEvent<Guid, Vector3> EnemyDied = new();
         [SerializeField] public float damage;
-        public UnityEvent<Guid,Vector3,float> EnemyHit;
+        public static UnityEvent<Guid,Vector3,float> EnemyHit = new();
         public float _prevHealth;
         public Guid Id { get; private set; }
 

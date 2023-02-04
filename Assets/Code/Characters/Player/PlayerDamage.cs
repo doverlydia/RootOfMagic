@@ -31,6 +31,7 @@ namespace Characters.Player
             if (!IsDead && collision.TryGetComponent(out Enemy.Enemy enemy))
             {
                 PlayerController.Instance.CurrentHp.Value -= enemy.damage;
+
                 PlayerDamaged.Invoke();
                 Cooldown = MaxCooldown;
                 player.PlayerHealthChangedEvent.Invoke(player.CurrentHp.Value, player.maxHp);
