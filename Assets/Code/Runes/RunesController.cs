@@ -32,8 +32,9 @@ namespace Runes
             return _runes[syllable.ToUpper()];
         } 
 
-        protected void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             InitRunes();
             RunesFirstLetter = new Lazy<HashSet<KeyCode>>(() =>
             {

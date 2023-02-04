@@ -20,8 +20,9 @@ namespace Player
 
         private RunesController _runesController => RunesController.Instance;
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _inputSequence.ObserveCountChanged().Subscribe(OnInputSequenceChanged);
             _inputSequence.ObserveAdd().Subscribe(OnInputSequenceGrew);
         }

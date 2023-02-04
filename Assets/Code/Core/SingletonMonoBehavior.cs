@@ -4,7 +4,7 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : Compone
 {
     public static T Instance { get; private set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (Instance != null && Instance != this as T)
         {
