@@ -4,6 +4,7 @@ using Player;
 using Runes;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Characters.Player
 {
@@ -13,6 +14,8 @@ namespace Characters.Player
         [SerializeField] private float _maxDamagePerTick;
         [SerializeField] protected float _maxCooldown = 1;
         [SerializeField] private float _cooldown;
+        public UnityEvent PlayerTookDamage = new();
+        public UnityEvent PlayerDead = new();
         public static PlayerController Instance { get; private set; }
         private void Awake()
         {
@@ -28,22 +31,30 @@ namespace Characters.Player
 
         private void Update()
         {
-            SetMovement(new Vector2(Input.GetAxisRaw("Horizontal"),
-                                    Input.GetAxisRaw("Vertical"))
-                                    .normalized);
-            if (_cooldown > 0) return;
-
-            Collider2D[] cols = new Collider2D[] { };
-            var colsCount = Physics2D.OverlapCollider(_collider, new ContactFilter2D().NoFilter(), cols);
-            for (int i = colsCount; i < 0; i--)
+            if (CurrentHp > 0)
             {
-                if (cols[i].TryGetComponent(out Enemy.Enemy enemy))
+                SetMovement(new Vector2(Input.GetAxisRaw("Horizontal"),
+                                        Input.GetAxisRaw("Vertical"))
+                                        .normalized);
+                if (_cooldown > 0) return;
+
+                Collider2D[] cols = new Collider2D[] { };
+                var colsCount = Physics2D.OverlapCollider(_collider, new ContactFilter2D().NoFilter(), cols);
+                for (int i = colsCount; i < 0; i--)
                 {
-                    CurrentHp -= enemy.damage;
-                    _cooldown = _maxCooldown;
+                    if (cols[i].TryGetComponent(out Enemy.Enemy enemy))
+                    {
+                        CurrentHp -= enemy.damage;
+                        _cooldown = _maxCooldown;
+                        PlayerTookDamage.Invoke();
+                    }
                 }
+                if (CurrentHp <= 0)
+                {
+                    PlayerDead.Invoke();
+                }
+                _cooldown -= Time.deltaTime;
             }
-            _cooldown -= Time.deltaTime;
         }
     }
 }
