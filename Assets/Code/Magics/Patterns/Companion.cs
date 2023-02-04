@@ -11,8 +11,7 @@ namespace Magics.Patterns
         public override void MoveLogic(Transform pivot)
         {
             transform.SetParent(null);
-            Enemy[] enemies = FindObjectsOfType<Enemy>();
-            target = enemies[Random.Range(0, enemies.Length)].transform;
+            target = EnemyController.Instance.GetRandomEnemy()?.gameObject.transform;
             if (target == null)
             {
                 target = transform;

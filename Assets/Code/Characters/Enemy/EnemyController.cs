@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Characters.Enemy;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour
+namespace Characters.Enemy
+{
+    public class EnemyController : SingletonMonoBehavior<EnemyController>
 {
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _enemyPrefab;
@@ -19,8 +22,15 @@ public class EnemyController : MonoBehaviour
     private int _wavesCompletedAmount;
     private Camera _camera;
 
-    private void Awake()
+    public Enemy GetRandomEnemy()
     {
+        var random = new System.Random();
+        return _enemies.Values.OrderBy(_ => random.Next()).FirstOrDefault();
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
         _camera = Camera.main;
         Enemy.EnemyDied.AddListener(OnEnemyDied);
     }
@@ -114,4 +124,5 @@ public class EnemyController : MonoBehaviour
     {
         _enemies.Remove(id);
     }
+}
 }
