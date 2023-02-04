@@ -56,7 +56,7 @@ namespace Magics.Controller
             var effect = Effects.FirstOrDefault(x => x.type == notification.StatusEffectType).prefab;
 
             var patternObj = Instantiate(pattern);
-            var effectObj = Instantiate(effect, pattern.transform);
+            var effectObj = Instantiate(effect, patternObj.transform);
 
             var magicObj = patternObj.AddComponent<Magic>();
             magicObj.StatusEffect = effectObj.GetComponent<StatusEffect>();
