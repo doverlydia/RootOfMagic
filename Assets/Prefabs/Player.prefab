@@ -1702,6 +1702,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: glowColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: glowColor.b
+      value: 0.06349182
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: glowColor.g
+      value: 0.06349182
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: glowColor.r
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: hurtColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: hurtColor.b
+      value: 0.56078434
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: hurtColor.g
+      value: 0.56078434
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: hurtColor.r
+      value: 0.9843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 5157258521620022323, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
+      propertyPath: hurtEffectDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5157258521620022326, guid: dee8ff0d00f7daa4089e39c41e02f0ff, type: 3}
       propertyPath: m_Name
       value: PlayerGFX
