@@ -1,6 +1,7 @@
 using UniRx;
 using UnityEngine;
 using Interfaces;
+using Magics.StatusEffects;
 
 namespace Characters
 {
@@ -8,7 +9,7 @@ namespace Characters
     {
         public float SpeedModifier = 1;
         public float CurrentHp;
-        public ReactiveCollection<IStatusEffect> StatusEffects = new();
+        public ReactiveCollection<StatusEffect> StatusEffects = new();
 
         [SerializeField] protected float speed;
         [SerializeField] protected float maxHp;
@@ -20,9 +21,9 @@ namespace Characters
             StatusEffects.ObserveRemove().Subscribe(OnEffectRemoved);
         }
 
-        public void OnEffectRemoved(CollectionRemoveEvent<IStatusEffect> e)
+        public void OnEffectRemoved(CollectionRemoveEvent<StatusEffect> e)
         {
-            Destroy((e.Value as MonoBehaviour).gameObject);
+            Destroy(e.Value.gameObject);
         }
 
         public void SetMovement(Vector2 direction)

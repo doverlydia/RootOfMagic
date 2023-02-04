@@ -27,10 +27,10 @@ namespace Magics.StatusEffects
 
         public virtual void ApplyEffect()
         {
-            var sameEffects = _target.StatusEffects.Where(x => x.GetType() == GetType()).ToList();
-            if (sameEffects.Count > 0)
+            var sameEffects = _target.StatusEffects.Where(x => x.GetType() == GetType());
+            if (sameEffects.Count() > 0)
             {
-                for (int i = sameEffects.Count; i < 0; i--)
+                for (int i = sameEffects.Count(); i < 0; i--)
                 {
                     _target.StatusEffects.RemoveAt(i);
                 }
