@@ -9,26 +9,19 @@ using UnityEngine.Events;
 
 namespace Player
 {
-    public class PlayerInputController : MonoBehaviour
+    public class PlayerInputController : SingletonMonoBehavior<PlayerInputController>
     {
-        [SerializeField] private RunesController _runesController;
         private ReactiveCollection<string> _inputSequence = new();
 
         public UnityEvent<string> NewUserInputState = new();
+        public UnityEvent<Rune> OnRuneCreated = new();
         // new Megic created event
         public UnityEvent<MagicNotification> NewMagicCreated = new();
-        public static PlayerInputController Instance { get; private set; }
 
+        private RunesController _runesController => RunesController.Instance;
+        
         private void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
             _inputSequence.ObserveCountChanged().Subscribe(OnInputSequenceChanged);
             _inputSequence.ObserveAdd().Subscribe(OnInputSequenceGrew);
         }

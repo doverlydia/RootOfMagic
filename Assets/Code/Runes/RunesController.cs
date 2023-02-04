@@ -6,7 +6,7 @@ using Random = System.Random;
 
 namespace Runes
 {
-    public class RunesController : MonoBehaviour
+    public class RunesController : SingletonMonoBehavior<RunesController>
     {
         [SerializeField] private SyllablesScriptableObject syllables;
 
