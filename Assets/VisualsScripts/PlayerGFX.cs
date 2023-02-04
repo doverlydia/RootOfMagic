@@ -14,13 +14,15 @@ public class PlayerGFX : MonoBehaviour
     [SerializeField] private float happyFaceDuration = 1.5f;
     [SerializeField] private Color hurtColor;
     [SerializeField] private float hurtEffectDuration;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color glowColor;
     Tween playerFaceTimerTween;
     private float lastHealthAmount;
 
     private void Start()
     {
         PlayerController.Instance.PlayerHealthChangedEvent.AddListener(UpdateLocalPlayerHealth);
-        PlayerInputController.Instance.NewMagicCreated.AddListener(FaceChangeByMagic);
+        PlayerInputController.Instance.NewMagicCreated.AddListener(OnDoMagicPlayerGFX);
         lastHealthAmount = PlayerController.Instance.CurrentHp.Value;
     }
 
@@ -41,12 +43,14 @@ public class PlayerGFX : MonoBehaviour
         SR.DOColor(hurtColor, hurtEffectDuration / 2f).SetLoops(2, LoopType.Yoyo);
     }
 
-    private void FaceChangeByMagic(MagicNotification notification)
+    private void OnDoMagicPlayerGFX(MagicNotification notification)
     {
         //if(notification.PatternType == Runes.PatternType.Beam)
        // {
             PlayerDoFace(PlayerFace.Smile, happyFaceDuration);
         //}
+
+        SR.material.DOColor(glowColor, "_EmissionColor", happyFaceDuration / 2f).SetLoops(2, LoopType.Yoyo);
     }
 
     private Texture FaceToTexture(PlayerFace face)

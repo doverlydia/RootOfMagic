@@ -798,6 +798,22 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
+      propertyPath: glowColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
+      propertyPath: glowColor.b
+      value: 0.06349182
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
+      propertyPath: glowColor.g
+      value: 0.06349182
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
+      propertyPath: glowColor.r
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
       propertyPath: hurtColor.a
       value: 1
       objectReference: {fileID: 0}

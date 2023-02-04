@@ -1,3 +1,4 @@
+using Characters.Player;
 using UnityEngine;
 
 namespace Magics.Patterns
@@ -7,17 +8,14 @@ namespace Magics.Patterns
         public Vector3 targetAngle = new Vector3(0f, 345f, 0f);
         private Vector3 _currentAngle;
         [SerializeField] float speed = 5;
-        public override void MoveLogic(Transform pivot)
+        public override async void MoveLogic(Transform pivot)
         {
-            _currentAngle = new Vector3(
-              Mathf.LerpAngle(_currentAngle.x, targetAngle.x, speed * Time.deltaTime),
-              Mathf.LerpAngle(_currentAngle.y, targetAngle.y, speed * Time.deltaTime),
-              Mathf.LerpAngle(_currentAngle.z, targetAngle.z, speed * Time.deltaTime));
+            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+            Vector3 direction = move.normalized;
 
-            transform.eulerAngles = _currentAngle;
-            if (Vector3.Distance(_currentAngle, targetAngle) <= 1f)
+            if (move != Vector3.zero)
             {
-                targetAngle *= -1;
+                transform.up = direction;
             }
         }
 
