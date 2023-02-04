@@ -1,6 +1,3 @@
-using Magics.StatusEffects;
-using System.Collections.Generic;
-using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -10,14 +7,9 @@ namespace Magics.Patterns
     {
         public FloatReactiveProperty Duration;
 
-        [SerializeField] protected int _ticksPerSecond;
-        [SerializeField] protected Collider2D _aoe;
-        [SerializeField] protected float _baseDamage;
+        [SerializeField] public int TicksPerSecond;
+        [SerializeField] public Collider2D Aoe;
+        [SerializeField] public float BaseDamage;
         public abstract void MoveLogic(Transform pivot);
-        public virtual void Update()
-        {
-
-            Debug.Log("i happen mi perent");
-        }
     }
 }

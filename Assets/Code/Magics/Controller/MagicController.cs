@@ -37,19 +37,18 @@ namespace Magics.Controller
             CreateMagic(notification);
         }
 
-        private Magic CreateMagic(MagicNotification notification)
+        private void CreateMagic(MagicNotification notification)
         {
-            var pattern = Patterns.FirstOrDefault(x => x.type == notification.PatternType).prefab;
-            var effect = Effects.FirstOrDefault(x => x.type == notification.StatusEffectType).prefab;
+            var pattern = Patterns.FirstOrDefault(x => x.type == notification.PatternType)?.prefab;
+            var effect = Effects.FirstOrDefault(x => x.type == notification.StatusEffectType)?.prefab;
 
             var patternObj = Instantiate(pattern);
             var effectObj = Instantiate(effect, patternObj.transform);
 
             var magicObj = patternObj.AddComponent<Magic>();
-            magicObj.StatusEffect = effectObj.GetComponent<StatusEffect>();
+            magicObj.statusEffect = effectObj.GetComponent<StatusEffect>();
             magicObj.Pattern = patternObj.GetComponent<Pattern>();
-
-            return magicObj;
+            patternObj.SetActive(true);
         }
     }
 }

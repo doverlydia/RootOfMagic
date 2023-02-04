@@ -3,19 +3,24 @@ using UnityEngine;
 
 namespace Magics.StatusEffects
 {
-    public class Slow : StatusEffect
+    public class Slow : StatusEffect<Slow>
     {
         [SerializeField] float _speedModifier;
-        public override void Effect(EffectableCharacter target)
+        public override void ApplyEffect()
         {
-            _target = target;
-            base.Effect(target);
-            target.SpeedModifier = _speedModifier;
+            base.ApplyEffect();
+            _target.SpeedModifier = _speedModifier;
         }
         private void OnDestroy()
         {
             if (_target != null)
                 _target.SpeedModifier = 1;
+        }
+
+        public override void Init(Slow statusEffect)
+        {
+            base.Init(statusEffect);
+            _speedModifier = statusEffect._speedModifier;
         }
     }
 }

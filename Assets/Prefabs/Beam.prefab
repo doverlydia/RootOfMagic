@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6127687910200720093
 Transform:
   m_ObjectHideFlags: 0
@@ -100,9 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Duration:
     value: 1
-  _ticksPerSecond: 2
-  _aoe: {fileID: 6127687910200720088}
-  _baseDamage: 3
+  TicksPerSecond: 3
+  Aoe: {fileID: 6127687910200720088}
+  BaseDamage: 3
   _pivot: {fileID: 0}
   targetAngle: {x: 0, y: 0, z: 45}
   speed: 5

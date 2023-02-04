@@ -22,10 +22,8 @@ namespace Magics.Patterns
             }
         }
 
-        public override void Update()
+        public void Update()
         {
-            base.Update();
-            Debug.Log("i happen mi child");
             MoveLogic(_pivot);
         }
     }

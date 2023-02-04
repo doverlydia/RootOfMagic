@@ -114,8 +114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352cb82b5bbd4c346b51c7ade2374445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runesController: {fileID: 0}
   NewUserInputState:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRuneCreated:
     m_PersistentCalls:
       m_Calls: []
   NewMagicCreated:

@@ -16,7 +16,7 @@ namespace Magics.Patterns
                 target = transform;
             }
         }
-        public override void Update()
+        public void Update()
         {
             if (target == null || target == transform)
             {

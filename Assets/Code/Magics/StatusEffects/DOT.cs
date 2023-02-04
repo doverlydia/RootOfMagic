@@ -1,14 +1,19 @@
-using Characters;
 using UnityEngine;
 namespace Magics.StatusEffects
 {
-    public class DOT : StatusEffect
+    public class DOT : StatusEffect<DOT>
     {
         [SerializeField] float _damagePerTick;
-        public override void Effect(EffectableCharacter target)
+        public override void ApplyEffect()
         {
-            base.Effect(target);
-            target.CurrentHp -= _damagePerTick;
+            base.ApplyEffect();
+            _target.CurrentHp -= _damagePerTick;
+        }
+
+        public override void Init(DOT statusEffect)
+        {
+            base.Init(statusEffect);
+            _damagePerTick = statusEffect._damagePerTick;
         }
     }
 }

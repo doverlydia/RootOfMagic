@@ -4,14 +4,20 @@ using UnityEngine;
 
 namespace Magics.StatusEffects
 {
-    public class Leech : StatusEffect
+    public class Leech : StatusEffect<Leech>
     {
         [SerializeField] float _damagePerTick;
-        public override void Effect(EffectableCharacter target)
+        public  override void ApplyEffect( )
         {
-            base.Effect(target);
+            base.ApplyEffect();
             PlayerController.Instance.CurrentHp += _damagePerTick;
-            target.CurrentHp -= _damagePerTick;
+            _target.CurrentHp -= _damagePerTick;
+        }
+
+        public override void Init(Leech statusEffect)
+        {
+            base.Init(statusEffect);
+            _damagePerTick = statusEffect._damagePerTick;
         }
     }
 }
