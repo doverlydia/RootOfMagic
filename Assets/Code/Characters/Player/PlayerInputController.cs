@@ -64,8 +64,10 @@ namespace Player
                 var sequenceString = string.Join("", _inputSequence.ToList());
                 var rune1Syllable = sequenceString.Substring(0, 2);
                 var rune2Syllable = sequenceString.Substring(2, 2);
-                var rune1 = _runesController.GetRunes().First(r => string.Equals(r.Syllable, rune1Syllable, StringComparison.CurrentCultureIgnoreCase));
-                var rune2 = _runesController.GetRunes().First(r => string.Equals(r.Syllable, rune2Syllable, StringComparison.CurrentCultureIgnoreCase));
+                var rune1 = _runesController.GetRuneBySyllable(rune1Syllable);
+                var rune2 = _runesController.GetRuneBySyllable(rune2Syllable);
+                
+                NewUserInputState.Invoke(sequenceString);
                 NewMagicCreated.Invoke(new MagicNotification(rune1.patternType, rune2.statusEffectType));
                 _inputSequence.Clear();
             }

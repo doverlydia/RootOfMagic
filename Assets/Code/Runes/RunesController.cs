@@ -27,6 +27,11 @@ namespace Runes
             return _runes.Values;
         }
 
+        public Rune GetRuneBySyllable(string syllable)
+        {
+            return _runes[syllable.ToUpper()];
+        } 
+
         protected void Awake()
         {
             InitRunes();
