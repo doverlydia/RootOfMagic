@@ -78,21 +78,21 @@ namespace Magics
             {
                 case DOT dot:
                 {
-                    var createdStatusEffect = gameObject.AddComponent(statusEffect.GetType()) as DOT;
+                    var createdStatusEffect = enemy.gameObject.AddComponent(statusEffect.GetType()) as DOT;
                     createdStatusEffect.Init(dot);
                     createdStatusEffect.enabled = true;
                     break;
                 }
                 case Slow slow:
                 {
-                    var createdStatusEffect = gameObject.AddComponent(statusEffect.GetType()) as Slow;
+                    var createdStatusEffect = enemy.gameObject.AddComponent(statusEffect.GetType()) as Slow;
                     createdStatusEffect.Init(slow);
                     createdStatusEffect.enabled = true;
                     break;
                 }
                 case Leech leech:
                 {
-                    var createdStatusEffect = gameObject.AddComponent(statusEffect.GetType()) as Leech;
+                    var createdStatusEffect = enemy.gameObject.AddComponent(statusEffect.GetType()) as Leech;
                     createdStatusEffect.Init(leech);
                     createdStatusEffect.enabled = true;
                     break;

@@ -42,13 +42,15 @@ namespace Magics.Controller
             var pattern = Patterns.FirstOrDefault(x => x.type == notification.PatternType)?.prefab;
             var effect = Effects.FirstOrDefault(x => x.type == notification.StatusEffectType)?.prefab;
 
-            var patternObj = Instantiate(pattern);
+            var patternObj = Instantiate(pattern, PlayerInputController.Instance.transform);
             var effectObj = Instantiate(effect, patternObj.transform);
 
             var magicObj = patternObj.AddComponent<Magic>();
             magicObj.statusEffect = effectObj.GetComponent<StatusEffect>();
             magicObj.Pattern = patternObj.GetComponent<Pattern>();
-            patternObj.SetActive(true);
+            magicObj.gameObject.SetActive(true);
+            magicObj.Pattern.gameObject.SetActive(true);
+            magicObj.statusEffect.gameObject.SetActive(true);
         }
     }
 }

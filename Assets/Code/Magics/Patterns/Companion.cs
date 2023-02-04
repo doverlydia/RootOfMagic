@@ -10,8 +10,10 @@ namespace Magics.Patterns
         [SerializeField] float speed;
         public override void MoveLogic(Transform pivot)
         {
-            target = FindObjectOfType<Enemy>().transform;
-            if(target == null)
+            transform.SetParent(null);
+            Enemy[] enemies = FindObjectsOfType<Enemy>();
+            target = enemies[Random.Range(0, enemies.Length)].transform;
+            if (target == null)
             {
                 target = transform;
             }

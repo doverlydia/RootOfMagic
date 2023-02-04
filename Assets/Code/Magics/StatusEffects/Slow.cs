@@ -21,6 +21,7 @@ namespace Magics.StatusEffects
         {
             base.Init(statusEffect);
             _speedModifier = statusEffect._speedModifier;
+            gameObject.SetActive(true);
         }
     }
 }
