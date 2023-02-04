@@ -632,18 +632,6 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1154785692}
-    - target: {fileID: 1731402540251715761, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
-      propertyPath: enemyBaseHp
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1731402540251715761, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
-      propertyPath: _maxEnemyCount
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1731402540251715761, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
-      propertyPath: _baseSpawnAmount
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
 --- !u!1001 &1836805448408927337
