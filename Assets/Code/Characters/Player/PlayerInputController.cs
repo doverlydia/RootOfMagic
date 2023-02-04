@@ -61,8 +61,8 @@ namespace Player
                 var rune1 = _runesController.GetRuneBySyllable(rune1Syllable);
                 var rune2 = _runesController.GetRuneBySyllable(rune2Syllable);
                 
-                NewUserInputState.Invoke(sequenceString);
-                NewMagicCreated.Invoke(new MagicNotification(rune1.patternType, rune2.statusEffectType));
+                NewUserInputState?.Invoke(sequenceString);
+                NewMagicCreated?.Invoke(new MagicNotification(rune1.patternType, rune2.statusEffectType));
                 _inputSequence.Clear();
             }
         }

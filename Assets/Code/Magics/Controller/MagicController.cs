@@ -22,23 +22,10 @@ namespace Magics.Controller
         public StatusEffectType type;
         public GameObject prefab;
     }
-    public class MagicController : MonoBehaviour
+    public class MagicController : SingletonMonoBehavior<MagicController>
     {
-
         public List<PatternPrefab> Patterns;
         public List<StatusEffectPrefab> Effects;
-        public static MagicController Instance { get; private set; }
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
 
         private void Start()
         {
