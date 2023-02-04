@@ -55,7 +55,7 @@ MonoBehaviour:
   Aoe: {fileID: 7174566347255282035}
   BaseDamage: 2
   StatusEffect: 0
-  speed: 4
+  speed: 2
   radius: 5
 --- !u!61 &7174566347255282035
 BoxCollider2D:

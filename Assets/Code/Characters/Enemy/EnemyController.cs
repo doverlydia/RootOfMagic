@@ -91,8 +91,8 @@ namespace Characters.Enemy
         {
             var enemy = Instantiate(_enemyPrefab, GetSpawnPos(), Quaternion.identity);
             var enemyData = enemy.GetComponent<Enemy>();
-            ModifyEnemy(enemyData);
             _enemies[enemyData.Id] = enemyData;
+            ModifyEnemy(enemyData);
         }
         
         _timePassed -= _spawnTickRateInSeconds;

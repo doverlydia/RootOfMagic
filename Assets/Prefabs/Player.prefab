@@ -133,9 +133,6 @@ MonoBehaviour:
   MaxCooldown: 1
   Cooldown: 0
   IsDead: 0
-  PlayerHealthChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
   PlayerDead:
     m_PersistentCalls:
       m_Calls:
@@ -864,14 +861,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpeedModifier: 1
-  CurrentHp: 10
+  CurrentHp:
+    value: 0
   speed: 3
   maxHp: 15
   PlayerDamage: {fileID: 420576194}
   PlayerHealthChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  _MaxHpIncreaseAmount: 0
+  _MaxHpIncreaseAmount: 10
 --- !u!114 &1836805447390997961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,6 +887,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnRuneCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMissTyped:
     m_PersistentCalls:
       m_Calls: []
   NewMagicCreated:

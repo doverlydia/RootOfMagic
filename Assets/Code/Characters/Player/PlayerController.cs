@@ -12,9 +12,9 @@ namespace Characters.Player
         public static PlayerController Instance { get; private set; }
         [SerializeField] private int _MaxHpIncreaseAmount = 0;
 
-        public void TryHeal(int healAmount)
+        public void TryHeal(float healAmount)
         {
-            CurrentHp.Value = Math.Max(CurrentHp.Value + healAmount, maxHp);
+            CurrentHp.Value = Math.Min(CurrentHp.Value + healAmount, maxHp);
             PlayerHealthChangedEvent.Invoke(CurrentHp.Value, maxHp);
         }
         
@@ -49,8 +49,9 @@ namespace Characters.Player
 
         private void OnWaveCompleted()
         {
+            var currentHealthRatio = CurrentHp.Value / maxHp; 
             maxHp += _MaxHpIncreaseAmount;
-            CurrentHp.Value = maxHp;
+            CurrentHp.Value = currentHealthRatio * maxHp;
            
         }
     }

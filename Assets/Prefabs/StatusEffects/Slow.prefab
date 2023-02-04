@@ -99,5 +99,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageMultiplier: 1
   _duration: 2
-  _tickRate: 2
+  _tickRate: 3
   _speedModifier: 2

@@ -174,10 +174,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _enemyPrefab: {fileID: 8343441789955522716, guid: 609054c05e6d6fd40bb32eee3b0e0b4b, type: 3}
-  _spawnTickRateInSeconds: 1.5
-  _baseSpawnAmount: 4
-  _maxEnemyCount: 30
-  enemyBaseHp: 5
+  _spawnTickRateInSeconds: 10
+  _baseSpawnAmount: 50
+  _maxEnemyCount: 300
+  enemyBaseHp: 4
   enemyBaseDamage: 3
   waveSurvived:
     m_PersistentCalls:
