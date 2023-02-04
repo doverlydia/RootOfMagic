@@ -22,8 +22,12 @@ namespace Characters.Enemy
         public void Awake()
         {
             Id = Guid.NewGuid();
+        }
+
+        public void Start()
+        {
             _prevHealth = CurrentHp.Value;
-            CurrentHp.Subscribe((float currentValue) =>
+            CurrentHp.Where(currentValue=>_prevHealth - currentValue > 0 ).Subscribe((float currentValue) =>
             {
                 EnemyHit.Invoke(Id,transform.position,_prevHealth - currentValue);
                 _prevHealth = currentValue;
