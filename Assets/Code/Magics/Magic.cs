@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Characters.Enemy;
 using Magics.Patterns;
 using Magics.StatusEffects;
@@ -78,21 +77,21 @@ namespace Magics
             {
                 case DOT dot:
                 {
-                    var createdStatusEffect = enemy.gameObject.AddComponent(statusEffect.GetType()) as DOT;
+                    var createdStatusEffect = enemy.gameObject.AddComponent<DOT>();
                     createdStatusEffect.Init(dot);
                     createdStatusEffect.enabled = true;
                     break;
                 }
                 case Slow slow:
                 {
-                    var createdStatusEffect = enemy.gameObject.AddComponent(statusEffect.GetType()) as Slow;
+                    var createdStatusEffect = enemy.gameObject.AddComponent<Slow>();
                     createdStatusEffect.Init(slow);
                     createdStatusEffect.enabled = true;
                     break;
                 }
                 case Leech leech:
                 {
-                    var createdStatusEffect = enemy.gameObject.AddComponent(statusEffect.GetType()) as Leech;
+                    var createdStatusEffect = enemy.gameObject.AddComponent<Leech>();
                     createdStatusEffect.Init(leech);
                     createdStatusEffect.enabled = true;
                     break;
