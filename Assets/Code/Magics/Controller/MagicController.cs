@@ -1,11 +1,11 @@
-using Magics.Patterns;
-using Magics.StatusEffects;
 using Notification;
 using Player;
 using Runes;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Magics.StatusEffects;
+using Magics.Patterns;
 
 namespace Magics.Controller
 {
@@ -54,14 +54,14 @@ namespace Magics.Controller
         {
             var pattern = Patterns.FirstOrDefault(x => x.type == notification.PatternType).prefab;
             var effect = Effects.FirstOrDefault(x => x.type == notification.StatusEffectType).prefab;
-            
+
             var patternObj = Instantiate(pattern);
             var effectObj = Instantiate(effect, pattern.transform);
-           
+
             var magicObj = patternObj.AddComponent<Magic>();
             magicObj.StatusEffect = effectObj.GetComponent<StatusEffect>();
             magicObj.Pattern = patternObj.GetComponent<Pattern>();
-           
+
             return magicObj;
         }
     }
