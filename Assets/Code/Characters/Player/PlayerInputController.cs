@@ -20,7 +20,8 @@ namespace Player
         private ReactiveCollection<string> _inputSequence = new();
 
         public UnityEvent<string> NewUserInputState = new();
-        public UnityEvent<Rune> OnRuneCreated = new();
+        public UnityEvent OnRuneCreated = new();
+        public UnityEvent OnMissTyped = new();
 
         // new Megic created event
         public UnityEvent<MagicNotification> NewMagicCreated = new();
@@ -111,9 +112,14 @@ namespace Player
                     || _runesController.RunesSecondLetter.Value.Contains(keyCode) && _inputSequence.Count % 2 == 1)
                 {
                     _inputSequence.Add(keyCode.ToString());
+                    if (_inputSequence.Count % 2 == 0)
+                    {
+                        OnRuneCreated.Invoke();
+                    }
                     continue;
                 }
-
+                
+                OnMissTyped.Invoke();
                 _inputSequence.Clear();
                 break;
 
