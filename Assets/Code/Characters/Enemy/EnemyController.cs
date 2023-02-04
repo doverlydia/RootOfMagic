@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Characters.Enemy;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -18,6 +19,7 @@ namespace Characters.Enemy
     [SerializeField] private float enemyBaseHp;
     [SerializeField] private float enemyBaseDamage;
     [SerializeField] public UnityEvent waveSurvived = new();
+    [SerializeField] public float MaxVariance = 0.5f;
     private Dictionary<Guid, Enemy> _enemies = new();
     private float _timePassed;
     private int _amountDied;
@@ -35,6 +37,7 @@ namespace Characters.Enemy
         base.Awake();
         _camera = Camera.main;
         Enemy.EnemyDied.AddListener(OnEnemyDied);
+        _timePassed = _spawnTickRateInSeconds;
     }
 
     private void OnDestroy()
@@ -45,10 +48,8 @@ namespace Characters.Enemy
     private void Update()
     {
         foreach (var enemy in _enemies.Values)
-        {
-            var enemyPos = enemy.gameObject.transform.position;
-            var playerPos = _player.transform.position;
-            enemy.SetMovement((playerPos - enemyPos).normalized);
+        {   
+            enemy.SetMovement(getMoveDirection(enemy));
         }
     }
 
@@ -119,8 +120,20 @@ namespace Characters.Enemy
 
     private void ModifyEnemy(Enemy enemy)
     {
-        enemy.SetMaxHp(enemyBaseHp * (1 + _wavesCompletedAmount / 5));
-        enemy.damage = enemyBaseDamage * (1 + _wavesCompletedAmount / 10);
+        enemy.SetMaxHp(enemyBaseHp + (1 + _wavesCompletedAmount * 2 / 3 ));
+        enemy.damage = enemyBaseDamage + (1 + _wavesCompletedAmount / 3) + _amountDied / 20;
+    }
+
+    private Vector2 getMoveDirection(Enemy enemy)
+    {
+        var playerPos = _player.transform.position;
+        var enemyPos = enemy.gameObject.transform.position;
+        var direction = (playerPos - enemyPos).normalized;
+        var distance = Vector2.Distance(enemyPos, playerPos);
+        var variance = Mathf.Lerp(MaxVariance, 0, distance / MaxVariance);
+        var directionVariance = Random.insideUnitCircle * variance;
+        direction += new Vector3(directionVariance.x,directionVariance.y);
+        return direction.normalized;
     }
 
     void OnEnemyDied(Guid id, Vector3 pos)

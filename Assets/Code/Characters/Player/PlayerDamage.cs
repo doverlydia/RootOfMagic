@@ -23,7 +23,7 @@ namespace Characters.Player
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerStay2D(Collider2D collision)
         {
             var player = PlayerController.Instance;
             if (Cooldown > 0) return;
