@@ -18,7 +18,6 @@ namespace Magics.StatusEffects
         {
             base.Init(statusEffect);
             _damagePerTick = statusEffect._damagePerTick;
-            gameObject.SetActive(true);
         }
     }
 }
