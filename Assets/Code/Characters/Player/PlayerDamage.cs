@@ -11,12 +11,13 @@ namespace Characters.Player
         public float Cooldown;
         public bool IsDead;
         public UnityEvent PlayerDead = new();
+        public UnityEvent PlayerDamaged = new();
         // Update is called once per frame
         void Update()
         {
             Cooldown -= Time.deltaTime;
 
-            if (PlayerController.Instance.CurrentHp.Value <= 0)
+            if (!IsDead && PlayerController.Instance.CurrentHp.Value <= 0)
             {
                 IsDead = true;
                 PlayerDead.Invoke();
@@ -27,9 +28,10 @@ namespace Characters.Player
         {
             var player = PlayerController.Instance;
             if (Cooldown > 0) return;
-            if (collision.TryGetComponent(out Enemy.Enemy enemy))
+            if (!IsDead && collision.TryGetComponent(out Enemy.Enemy enemy))
             {
                 PlayerController.Instance.CurrentHp.Value -= enemy.damage;
+                PlayerDamaged.Invoke();
                 Cooldown = MaxCooldown;
                 player.PlayerHealthChangedEvent.Invoke(player.CurrentHp.Value, player.maxHp);
             }
