@@ -4,8 +4,14 @@ namespace Magics.Patterns
 {
     public class Garlic : Pattern
     {
-        public Garlic(float angle, float radius, float duraion, int ticksPerSecond) : base(angle, radius, duraion, ticksPerSecond)
+        [SerializeField] protected Transform _pivot;
+        public override void MoveLogic(Transform pivot)
         {
+            transform.position = pivot.position;
+        }
+        public override void Update()
+        {
+            MoveLogic(_pivot);
         }
     }
 }

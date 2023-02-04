@@ -4,8 +4,29 @@ namespace Magics.Patterns
 {
     public class Beam : Pattern
     {
-        public Beam(float angle, float radius, float duration, int ticksPerSecond) : base(angle, radius, duration, ticksPerSecond)
+        public Transform _pivot;
+        public Vector3 targetAngle = new Vector3(0f, 345f, 0f);
+        private Vector3 _currentAngle;
+        [SerializeField] float speed = 5;
+        public override void MoveLogic(Transform pivot)
         {
+            _currentAngle = new Vector3(
+              Mathf.LerpAngle(_currentAngle.x, targetAngle.x, speed * Time.deltaTime),
+              Mathf.LerpAngle(_currentAngle.y, targetAngle.y, speed * Time.deltaTime),
+              Mathf.LerpAngle(_currentAngle.z, targetAngle.z, speed * Time.deltaTime));
+
+            transform.eulerAngles = _currentAngle;
+            if (Vector3.Distance(_currentAngle, targetAngle) <= 1f)
+            {
+                targetAngle *= -1;
+            }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            Debug.Log("i happen mi child");
+            MoveLogic(_pivot);
         }
     }
 }

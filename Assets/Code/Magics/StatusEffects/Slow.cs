@@ -1,32 +1,22 @@
-using Cysharp.Threading.Tasks;
+using Characters;
 using UnityEngine;
+
 namespace Magics.StatusEffects
 {
     public class Slow : StatusEffect
     {
-        private float _speedModifier;
-
-        public Slow(float durationInSeconds, float speedModifier) : base(durationInSeconds)
+        [SerializeField] float _speedModifier;
+        EffectableCharacter _target;
+        public override void Effect(EffectableCharacter target)
         {
-            _speedModifier = speedModifier;
+            _target = target;
+            base.Effect(target);
+            target.SpeedModifier = _speedModifier;
         }
-
-        protected override async UniTask Apply(EffectableCharacter target, EffectableCharacter source = null)
+        private void OnDestroy()
         {
-            target.SpeedModifier *= _speedModifier;
-
-            Debug.Log($"slow started");
-
-            if (Token.IsCancellationRequested)
-            {
-                Debug.Log($"slow cancled");
-                return;
-            }
-
-            target.SpeedModifier *= _speedModifier;
-            Debug.Log($"slow: {target.gameObject.name} : {target.SpeedModifier}");
-            await UniTask.Delay((int)(1000 * _durationInSeconds));
-            target.SpeedModifier /= _speedModifier;
+            if (_target != null)
+                _target.SpeedModifier = 1;
         }
     }
 }
