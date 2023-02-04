@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Characters.Player
 {
@@ -32,6 +33,11 @@ namespace Characters.Player
                 Cooldown = MaxCooldown;
                 PlayerTookDamage.Invoke();
             }
+        }
+
+        public void Replay()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
