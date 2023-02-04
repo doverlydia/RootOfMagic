@@ -32,6 +32,21 @@ namespace Characters.Enemy
         return _enemies.Values.OrderBy(_ => random.Next()).FirstOrDefault();
     }
 
+    public Enemy GetRandomEnemyInRadius(Vector2 position,float radius = 1)
+    {
+        var random = new System.Random();
+        return _enemies.Values
+            .Where(e => math.abs(Vector2.Distance(position, e.transform.position)) <= radius )
+            .OrderBy(_ => random.Next())
+            .FirstOrDefault();
+    }
+
+    public Enemy GetEnemyById(Guid id)
+    {
+        _enemies.TryGetValue(id,out var enemy);
+        return enemy;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -92,16 +107,16 @@ namespace Characters.Enemy
         switch (side)
         {
             case 0: // Left
-                return _camera.ViewportToWorldPoint(new Vector3(0, Random.Range(0f, 1f), _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(0, Random.Range(0.3f, 2.5f), _camera.nearClipPlane));
 
             case 1: // Right
-                return _camera.ViewportToWorldPoint(new Vector3(1, Random.Range(0f, 1f), _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(1, Random.Range(0.3f, 2.5f), _camera.nearClipPlane));
 
             case 2: // Bottom
-                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), 0, _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0.3f, 2.5f), 0, _camera.nearClipPlane));
 
             case 3: // Top
-                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), 1, _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0.3f, 2.5f), 1, _camera.nearClipPlane));
 
             default:
                 return Vector3.zero;
@@ -122,6 +137,7 @@ namespace Characters.Enemy
     {
         enemy.SetMaxHp(enemyBaseHp + (1 + _wavesCompletedAmount * 2 / 3 ));
         enemy.damage = enemyBaseDamage + (1 + _wavesCompletedAmount / 3) + _amountDied / 20;
+        enemy.speed += Random.Range(-0.3f, 0.5f);
     }
 
     private Vector2 getMoveDirection(Enemy enemy)

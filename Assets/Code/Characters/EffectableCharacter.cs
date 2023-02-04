@@ -11,7 +11,7 @@ namespace Characters
         public FloatReactiveProperty CurrentHp = new FloatReactiveProperty();
         public ReactiveCollection<StatusEffect> StatusEffects = new();
 
-        [SerializeField] protected float speed;
+        [SerializeField] public float speed;
         [SerializeField] public float maxHp;
 
         protected float ActualSpeed => SpeedModifier * speed;

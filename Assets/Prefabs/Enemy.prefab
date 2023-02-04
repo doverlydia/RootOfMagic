@@ -46,11 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e049bbe13f65d47908d4022100b233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedModifier: 0.6
-  CurrentHp: 0
-  speed: 1
+  SpeedModifier: 1
+  CurrentHp:
+    value: 0
+  speed: 1.2
   maxHp: 0
   damage: 0
+  EnemyHit:
+    m_PersistentCalls:
+      m_Calls: []
+  _prevHealth: 0
 --- !u!212 &8603730391309262055
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -104,6 +104,7 @@ MonoBehaviour:
   Aoe: {fileID: 7174566347255282035}
   BaseDamage: 5
   speed: 4
+  radius: 5
 --- !u!61 &7174566347255282035
 BoxCollider2D:
   m_ObjectHideFlags: 0
