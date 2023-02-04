@@ -14,13 +14,8 @@ namespace Magics
         public DateTime _lastTickTime;
         public DateTime _startingTime;
         public TimeSpan tickInterval;
-        public Magic(Pattern pattern, StatusEffect statusEffect)
-        {
-            Pattern = pattern;
-            this.statusEffect = statusEffect;
-        }
 
-        private void Awake()
+        public void Init()
         {
             _startingTime = DateTime.UtcNow;
             _lastTickTime = DateTime.Now;
