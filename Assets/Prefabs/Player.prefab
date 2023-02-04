@@ -872,7 +872,7 @@ MonoBehaviour:
   PlayerHealthChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  _MaxHpIncreaseAmount: 0
+  _MaxHpIncreaseAmount: 10
 --- !u!114 &1836805447390997961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,6 +890,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnRuneCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMissTyped:
     m_PersistentCalls:
       m_Calls: []
   NewMagicCreated:

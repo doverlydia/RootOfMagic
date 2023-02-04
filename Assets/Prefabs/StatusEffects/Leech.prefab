@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388fdd8efa750c941a6b3c7f24650931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageMultiplier: 0.7
-  _duration: 2
-  _tickRate: 2
+  DamageMultiplier: 0.02
+  _duration: 1
+  _tickRate: 1
   _damagePerTick: 2

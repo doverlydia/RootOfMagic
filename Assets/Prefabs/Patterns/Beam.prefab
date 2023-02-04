@@ -56,7 +56,7 @@ MonoBehaviour:
   BaseDamage: 0.25
   StatusEffect: 0
   targetAngle: {x: 0, y: 0, z: 22.5}
-  speed: 10
+  speed: 4
 --- !u!61 &6127687910200720088
 BoxCollider2D:
   m_ObjectHideFlags: 0
