@@ -148,6 +148,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  PlayerDamaged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,7 +870,7 @@ MonoBehaviour:
   CurrentHp:
     value: 0
   speed: 3
-  maxHp: 15
+  maxHp: 20
   PlayerDamage: {fileID: 420576194}
   PlayerHealthChangedEvent:
     m_PersistentCalls:
