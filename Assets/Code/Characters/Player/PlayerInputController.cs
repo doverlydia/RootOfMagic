@@ -31,7 +31,7 @@ namespace Player
         {
             var sequenceString = string.Join("", _inputSequence.ToList());
             NewUserInputState.Invoke(sequenceString);
-            print($"changed: {string.Join("", _inputSequence)}");
+            print($"changed: {sequenceString}");
         }
 
         private void OnInputSequenceGrew(CollectionAddEvent<string> addEvent)
