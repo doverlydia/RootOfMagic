@@ -174,3 +174,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ec0bfa0a40eb1499e9a915ce3550f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Patterns:
+  - type: 0
+    prefab: {fileID: 6127687910200720089, guid: 83d8af5729dbbff4886b30cd64f0ff84, type: 3}
+  - type: 1
+    prefab: {fileID: 7174566347255282039, guid: f167824fe78769145b9a85e92f4d8c7a, type: 3}
+  - type: 2
+    prefab: {fileID: 7606517963563319390, guid: 5ec55f8f0a30cb847a1772a28486151f, type: 3}
+  Effects:
+  - type: 0
+    prefab: {fileID: 8664531882578668095, guid: f0afe1e2e62eb034f99c52e9f244102b, type: 3}
+  - type: 1
+    prefab: {fileID: 1424988540008886101, guid: 905d1e30b29e03046916ed4d609a0eb6, type: 3}
+  - type: 2
+    prefab: {fileID: 8710956254289953610, guid: 58181eb15153d0247ad91467d1a5e670, type: 3}
