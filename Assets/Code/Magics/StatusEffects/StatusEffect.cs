@@ -1,6 +1,7 @@
 using Characters;
 using Interfaces;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Magics.StatusEffects
@@ -14,36 +15,22 @@ namespace Magics.StatusEffects
             _duration = statusEffect._duration;
             _tickRate = statusEffect._tickRate;
         }
-    }
-
-
-    public abstract class StatusEffect : MonoBehaviour, IStatusEffect
-    {
-        public float DamageMultiplier;
-        public float _duration;
-        public float _tickRate;
-        public float _deltaTick => 1 / _tickRate;
-        protected EffectableCharacter _target;
-
         public virtual void ApplyEffect()
         {
-            var same = _target.StatusEffects.Where(x => x.GetType() == GetType()).ToList();
-            for (int i = same.Count; i < 0; i--)
+            var same = _target.GetComponents<TDerived>();
+            for (int i = 0; i < same.Length; i++)
             {
                 var effect = same[i];
-                _target.StatusEffects.Remove(effect);
-                
-                if (effect != null)
-                    Destroy(effect);
+                if (effect != this)
+                {
+                    _target.StatusEffects.Remove(effect);
+
+                    if (effect != null)
+                        Destroy(effect);
+                }
             }
             _target.StatusEffects.Add(this);
         }
-
-        private void Start()
-        {
-            _target = gameObject.GetComponent<EffectableCharacter>();
-        }
-
         private void Update()
         {
             if (_target == null)
@@ -64,7 +51,19 @@ namespace Magics.StatusEffects
                 Destroy(this);
             }
         }
+    }
 
+    public abstract class StatusEffect : MonoBehaviour, IStatusEffect
+    {
+        public float DamageMultiplier;
+        public float _duration;
+        public float _tickRate;
+        public float _deltaTick => 1 / _tickRate;
+        protected EffectableCharacter _target;
 
+        private void Start()
+        {
+            _target = gameObject.GetComponent<EffectableCharacter>();
+        }
     }
 }
