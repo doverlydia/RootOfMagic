@@ -3,8 +3,8 @@ using Notification;
 using Runes;
 using System;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Characters.Player;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -37,6 +37,11 @@ namespace Player
             _inputSequence.ObserveCountChanged().Subscribe(OnInputSequenceChanged);
             _inputSequence.ObserveAdd().Subscribe(OnInputSequenceGrew);
             _magicCooldownDuration = TimeSpan.FromSeconds(_cooldownInSeconds);
+        }
+
+        private void Start()
+        {
+            PlayerController.Instance.PlayerDamage.PlayerDead.AddListener(OnPlayerDead);
         }
 
         private async Task MagicCoolDownAction()
@@ -92,7 +97,7 @@ namespace Player
 
         private void Update()
         {
-            if (_magicCoolDown.Status == TaskStatus.Running)
+            if (PlayerController.Instance.PlayerDamage.IsDead || _magicCoolDown.Status == TaskStatus.Running)
             {
                 return;
             }
@@ -125,6 +130,11 @@ namespace Player
 
             }
 
+        }
+
+        void OnPlayerDead()
+        {
+            _inputSequence.Clear();
         }
 
 
