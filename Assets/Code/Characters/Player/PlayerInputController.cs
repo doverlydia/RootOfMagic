@@ -3,6 +3,9 @@ using Notification;
 using Runes;
 using System;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,12 +14,19 @@ namespace Player
 {
     public class PlayerInputController : SingletonMonoBehavior<PlayerInputController>
     {
+        
+        private TimeSpan _magicCooldownDuration;
+        public float _cooldownInSeconds;
         private ReactiveCollection<string> _inputSequence = new();
 
         public UnityEvent<string> NewUserInputState = new();
         public UnityEvent<Rune> OnRuneCreated = new();
+
         // new Megic created event
         public UnityEvent<MagicNotification> NewMagicCreated = new();
+        private DateTime _lastmagicCreationTImeUtc;
+
+        private Task _magicCoolDown = Task.CompletedTask;
 
         private RunesController _runesController => RunesController.Instance;
         
@@ -25,6 +35,17 @@ namespace Player
             base.Awake();
             _inputSequence.ObserveCountChanged().Subscribe(OnInputSequenceChanged);
             _inputSequence.ObserveAdd().Subscribe(OnInputSequenceGrew);
+            _magicCooldownDuration = TimeSpan.FromSeconds(_cooldownInSeconds);
+        }
+
+        private async Task MagicCoolDownAction()
+        {
+            await UniTask
+                .Delay(_magicCooldownDuration)
+                .ContinueWith(() =>
+                {
+                    _inputSequence.Clear();
+                });
         }
 
         private void OnInputSequenceChanged(int count)
@@ -60,18 +81,26 @@ namespace Player
                 var rune2Syllable = sequenceString.Substring(2, 2);
                 var rune1 = _runesController.GetRuneBySyllable(rune1Syllable);
                 var rune2 = _runesController.GetRuneBySyllable(rune2Syllable);
-                
                 NewUserInputState?.Invoke(sequenceString);
                 NewMagicCreated?.Invoke(new MagicNotification(rune1.patternType, rune2.statusEffectType));
-                _inputSequence.Clear();
+                _lastmagicCreationTImeUtc = DateTime.UtcNow;
+                _magicCoolDown = MagicCoolDownAction();
             }
         }
 
 
         private void Update()
         {
+            if (_magicCoolDown.Status == TaskStatus.Running)
+            {
+                return;
+            }
             foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
             {
+                if (_inputSequence.Count == 4)
+                {
+                    return;
+                }
 
                 if (!Input.GetKeyDown(keyCode) || keyCode.IsArrowKey() || keyCode.IsUtilityKey())
                 {
