@@ -350,11 +350,6 @@ MonoBehaviour:
   ScoreChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1077134830 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 218571156, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
-  m_PrefabInstance: {fileID: 1518060784}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1154785692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1836805447390998005, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
@@ -424,10 +419,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 218571156, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9112795025084666441, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -518,6 +509,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
+--- !u!1 &1518060785 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5519754350018064502, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
+  m_PrefabInstance: {fileID: 1518060784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1539342717 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 295314275591783542, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
@@ -644,7 +640,11 @@ PrefabInstance:
     - target: {fileID: 420576194, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
       propertyPath: PlayerDead.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1077134830}
+      objectReference: {fileID: 1518060785}
+    - target: {fileID: 420576194, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
+      propertyPath: PlayerDead.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 1546538552, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
