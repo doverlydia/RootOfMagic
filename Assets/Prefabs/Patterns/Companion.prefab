@@ -50,10 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Duration:
-    value: 3
+    value: 4
   TicksPerSecond: 2
   Aoe: {fileID: 7174566347255282035}
-  BaseDamage: 5
+  BaseDamage: 2
   StatusEffect: 0
   speed: 4
   radius: 5

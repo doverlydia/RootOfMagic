@@ -51,12 +51,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Duration:
     value: 1.2
-  TicksPerSecond: 3
+  TicksPerSecond: 7
   Aoe: {fileID: 6127687910200720088}
-  BaseDamage: 3
+  BaseDamage: 0.25
   StatusEffect: 0
-  targetAngle: {x: 0, y: 0, z: 90}
-  speed: 15
+  targetAngle: {x: 0, y: 0, z: 22.5}
+  speed: 10
 --- !u!61 &6127687910200720088
 BoxCollider2D:
   m_ObjectHideFlags: 0
