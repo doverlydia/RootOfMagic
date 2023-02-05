@@ -536,11 +536,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 295314275591783542, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
   m_PrefabInstance: {fileID: 295314274812853435}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1606812558 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9112795025880888857, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
-  m_PrefabInstance: {fileID: 1518060784}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1990615992
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHitEffectDuration: 0.25
   enemyHitEffectColor: {r: 1, g: 0.47547168, b: 0.47547168, a: 1}
-  enemyDeathParticles: {fileID: 1606812558}
+  enemyDeathParticles: {fileID: 2460574883421320801, guid: 193a0ef63fb23724fa2408a2f5e9fd3c, type: 3}
 --- !u!1001 &295314274812853435
 PrefabInstance:
   m_ObjectHideFlags: 0
