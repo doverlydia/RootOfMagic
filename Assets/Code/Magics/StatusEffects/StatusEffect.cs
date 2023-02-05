@@ -1,8 +1,10 @@
 using Characters;
+using Characters.Enemy;
 using Interfaces;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Magics.StatusEffects
 {
@@ -58,12 +60,13 @@ namespace Magics.StatusEffects
         public float DamageMultiplier;
         public float _duration;
         public float _tickRate;
+        public static UnityEvent<EffectableCharacter, StatusEffect> CharacterEffected = new();
         public float _deltaTick => 1 / _tickRate;
         protected EffectableCharacter _target;
-
         private void Start()
         {
             _target = gameObject.GetComponent<EffectableCharacter>();
+            CharacterEffected.Invoke(_target, this);
         }
     }
 }

@@ -641,10 +641,6 @@ PrefabInstance:
       propertyPath: PlayerDead.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1518060785}
-    - target: {fileID: 420576194, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: PlayerDead.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetActive
-      objectReference: {fileID: 0}
     - target: {fileID: 1546538552, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -784,54 +780,6 @@ PrefabInstance:
     - target: {fileID: 6761810925385199582, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388572, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388572, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388572, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: glowColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: glowColor.b
-      value: 0.06349182
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: glowColor.g
-      value: 0.06349182
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: glowColor.r
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: hurtColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: hurtColor.b
-      value: 0.56078434
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: hurtColor.g
-      value: 0.56078434
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: hurtColor.r
-      value: 0.9843137
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840941033134388574, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
-      propertyPath: hurtEffectDuration
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8832109370171258622, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
       propertyPath: m_AnchorMax.y
