@@ -40,6 +40,6 @@ public class EnemyEffectHandler : MonoBehaviour
     private void OnDestroy()
     {
         Enemy.EnemyHit.RemoveListener(OnEnemyHit);
-        Enemy.EnemyHit.RemoveListener(OnEnemyDie);
+        Enemy.EnemyDied.RemoveListener(OnEnemyDie);
     }
 }
