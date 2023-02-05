@@ -8,6 +8,7 @@ namespace Characters.Enemy
     public class Enemy : EffectableCharacter
     {
         public static UnityEvent<Guid, Vector3> EnemyDied = new();
+        bool isDead;
         [SerializeField] public float damage;
         public static UnityEvent<Guid,Vector3,float> EnemyHit = new();
         public float _prevHealth;
@@ -36,8 +37,9 @@ namespace Characters.Enemy
 
         private void Update()
         {
-            if (CurrentHp.Value < 0)
+            if (CurrentHp.Value < 0 && !isDead)
             {
+                isDead = true;
                 EnemyDied.Invoke(Id, gameObject.transform.position);
                 Destroy(gameObject);
             }
