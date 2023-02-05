@@ -32,6 +32,7 @@ public static class DOTWeenCustom
                 .Append(target.DOScale(new Vector3(initialScale.x, initialScale.y), returnDuration));
         }
 
+        seq.OnKill(() => { target.localScale = initialScale; target.localPosition = Vector3.zero; });
         return seq;
     }
 

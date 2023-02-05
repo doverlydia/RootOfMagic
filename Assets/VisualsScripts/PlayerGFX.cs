@@ -18,27 +18,38 @@ public class PlayerGFX : MonoBehaviour
     [SerializeField] private Color glowColor;
     Tween playerFaceTimerTween;
     private float lastHealthAmount;
+    bool initializedHealth;
+   // private Sequence squashSeqTest;
 
     private void Start()
     {
+        //squashSeqTest = DOTWeenCustom.SquashNStretch(transform, new Vector2(1.2f, 0.8f), hurtEffectDuration, true).SetAutoKill(false);
         PlayerController.Instance.PlayerHealthChangedEvent.AddListener(UpdateLocalPlayerHealth);
         PlayerInputController.Instance.NewMagicCreated.AddListener(OnDoMagicPlayerGFX);
-        lastHealthAmount = PlayerController.Instance.CurrentHp.Value;
+        //lastHealthAmount = PlayerController.Instance.CurrentHp.Value;
     }
 
     private void UpdateLocalPlayerHealth(float newHealth, float newMaxHp)
     {
-        if(lastHealthAmount > newHealth)
+        float healthRatio = newHealth / newMaxHp;
+        if (!initializedHealth) lastHealthAmount = healthRatio;
+        print("last, new: " + lastHealthAmount + ", " + healthRatio + " - " + (lastHealthAmount > healthRatio));
+        if(lastHealthAmount > healthRatio || !initializedHealth)
         {
+            initializedHealth = true;
             //Player was hurt
             PlayerHurtGFX();
         }
+
+        lastHealthAmount = healthRatio;
     }
 
     private void PlayerHurtGFX()
     {
         PlayerDoFace(PlayerFace.Angry, hurtFaceDuration);
 
+        transform.DOKill();
+        SR.DOKill();
         DOTWeenCustom.SquashNStretch(transform, new Vector2(1.2f, 0.8f), hurtEffectDuration, true);
         SR.DOColor(hurtColor, hurtEffectDuration / 2f).SetLoops(2, LoopType.Yoyo);
     }
@@ -68,6 +79,11 @@ public class PlayerGFX : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
             PlayerDoFace(PlayerFace.Angry, 3f);
         */
+        /*
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            squashSeqTest.Restart();
+        }*/
     }
 
     public void PlayerDoFace(PlayerFace face, float duration)

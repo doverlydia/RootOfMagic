@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b201c8ac6375b4fb99225433ddd262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHitEffectDuration: 0.5
+  enemyHitEffectDuration: 0.25
   enemyHitEffectColor: {r: 1, g: 0.47547168, b: 0.47547168, a: 1}
 --- !u!1001 &295314274812853435
 PrefabInstance:
