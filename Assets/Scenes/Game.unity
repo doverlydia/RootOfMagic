@@ -350,6 +350,23 @@ MonoBehaviour:
   ScoreChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &919741995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4265523675748714848, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
+  m_PrefabInstance: {fileID: 1518060784}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &919741999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919741995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2625712b5e5c3145927191da028e392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1154785692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1836805447390998005, guid: 8cdad0cf81bf1c447be7588d8db7dab6, type: 3}
@@ -519,6 +536,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 295314275591783542, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
   m_PrefabInstance: {fileID: 295314274812853435}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1606812558 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9112795025880888857, guid: 7bf7ec594d12c4197a696d605dec686a, type: 3}
+  m_PrefabInstance: {fileID: 1518060784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1990615992
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHitEffectDuration: 0.25
   enemyHitEffectColor: {r: 1, g: 0.47547168, b: 0.47547168, a: 1}
+  enemyDeathParticles: {fileID: 1606812558}
 --- !u!1001 &295314274812853435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -628,6 +651,18 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1154785692}
+    - target: {fileID: 1731402540251715761, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
+      propertyPath: _maxEnemyCount
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731402540251715761, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
+      propertyPath: _baseSpawnAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731402540251715761, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
+      propertyPath: _spawnTickRateInSeconds
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3640fa0e7b3274e91b0ccf4041663d38, type: 3}
 --- !u!1001 &1836805448408927337
