@@ -11,11 +11,8 @@ using Scene = UnityEngine.SceneManagement.Scene;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] AudioSource bgSound;
-    [SerializeField] AudioSource enemyDead;
     [SerializeField] AudioSource playerDamage;
     [SerializeField] AudioSource playerDead;
-    [SerializeField] AudioSource goodSyllable;
-    [SerializeField] AudioSource badSyllable;
     [SerializeField] Toggle soundToggle;
     public static SoundManager Instance { get; private set; }
 
@@ -51,7 +48,6 @@ public class SoundManager : MonoBehaviour
         {
             return;
         }
-        Enemy.EnemyDied.RemoveListener((x, y) => enemyDead.Play());
         PlayerController.Instance.PlayerDamage.PlayerDead.RemoveListener(() =>
             playerDead.Play());
         PlayerController.Instance.PlayerDamage.PlayerDamaged.RemoveListener(() => playerDamage.Play());
@@ -64,7 +60,6 @@ public class SoundManager : MonoBehaviour
         {
             return;
         }
-        Enemy.EnemyDied.AddListener((x, y) => enemyDead.Play());
         PlayerController.Instance.PlayerDamage.PlayerDead.AddListener(() => playerDead.Play());
         PlayerController.Instance.PlayerDamage.PlayerDamaged.AddListener(() => playerDamage.Play());
     }

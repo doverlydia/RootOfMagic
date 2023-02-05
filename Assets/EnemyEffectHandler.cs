@@ -15,7 +15,7 @@ public class EnemyEffectHandler : MonoBehaviour
     private void Start()
     {
         Enemy.EnemyHit.AddListener(OnEnemyHit);
-        Enemy.EnemyHit.AddListener(OnEnemyDie);
+        Enemy.EnemyDied.AddListener(OnEnemyDie);
     }
 
     private void OnEnemyHit(Guid enemyID, Vector3 pos, float amount)
@@ -32,7 +32,7 @@ public class EnemyEffectHandler : MonoBehaviour
         */
     }
 
-    private void OnEnemyDie(Guid enemyID, Vector3 pos, float amount)
+    private void OnEnemyDie(Guid enemyID, Vector3 pos)
     {
         Instantiate(enemyDeathParticles, pos, Quaternion.identity);
     }
