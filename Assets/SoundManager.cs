@@ -2,8 +2,11 @@ using Characters.Enemy;
 using Characters.Player;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Scene = UnityEngine.SceneManagement.Scene;
 
 public class SoundManager : MonoBehaviour
 {
@@ -13,6 +16,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource playerDead;
     [SerializeField] AudioSource goodSyllable;
     [SerializeField] AudioSource badSyllable;
+    [SerializeField] Toggle soundToggle;
     public static SoundManager Instance { get; private set; }
 
     private void Awake()
@@ -27,6 +31,7 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         SceneManager.sceneLoaded += OnGameLoaded;
+        soundToggle.onValueChanged.AddListener(IsSound);
 
     }
     private void OnGameLoaded(Scene scene, LoadSceneMode mode)
@@ -36,16 +41,45 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        Enemy.EnemyDied.RemoveListener((x, y) => enemyDead.Play());
-        PlayerController.Instance.PlayerDamage.PlayerDead.RemoveListener(() => {
-            playerDead.Play();
-            Debug.Log("player is dead");
-        });
-        PlayerController.Instance.PlayerDamage.PlayerDamaged.RemoveListener(() => playerDamage.Play());
+        IsSound(soundToggle.isOn);
+    }
 
+    private void StopSound()
+    {
+        bgSound.Stop();
+        if (SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            return;
+        }
+        Enemy.EnemyDied.RemoveListener((x, y) => enemyDead.Play());
+        PlayerController.Instance.PlayerDamage.PlayerDead.RemoveListener(() =>
+            playerDead.Play());
+        PlayerController.Instance.PlayerDamage.PlayerDamaged.RemoveListener(() => playerDamage.Play());
+    }
+
+    private void PlaySound()
+    {
+        bgSound.Play();
+        if (SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            return;
+        }
         Enemy.EnemyDied.AddListener((x, y) => enemyDead.Play());
         PlayerController.Instance.PlayerDamage.PlayerDead.AddListener(() => playerDead.Play());
         PlayerController.Instance.PlayerDamage.PlayerDamaged.AddListener(() => playerDamage.Play());
+    }
+
+    public void IsSound(bool isSound)
+    {
+        if (isSound)
+        {
+            StopSound();
+            PlaySound();
+        }
+        else
+        {
+            StopSound();
+        }
     }
 
 }
