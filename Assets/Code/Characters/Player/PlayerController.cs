@@ -45,6 +45,7 @@ namespace Characters.Player
                                         Input.GetAxisRaw("Vertical"))
                                         .normalized);
             }
+            Debug.Log("this is also important");
         }
 
         private void OnWaveCompleted()
