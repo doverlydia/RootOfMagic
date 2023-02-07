@@ -45,6 +45,7 @@ namespace Characters.Player
                     PlayerDead.Invoke();
                 }
             }
+            Debug.Log("somehting important");
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
