@@ -48,6 +48,8 @@ namespace Magics.Controller
             var magicObj = patternObj.AddComponent<Magic>();
             magicObj.statusEffect = effectObj.GetComponent<StatusEffect>();
             magicObj.Pattern = patternObj.GetComponent<Pattern>();
+            magicObj.Pattern.StatusEffect = notification.StatusEffectType;
+            magicObj.Init();
             magicObj.gameObject.SetActive(true);
             magicObj.Pattern.gameObject.SetActive(true);
             magicObj.statusEffect.gameObject.SetActive(true);

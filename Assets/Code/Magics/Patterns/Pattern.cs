@@ -1,3 +1,5 @@
+using Magics.StatusEffects;
+using Runes;
 using UniRx;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ namespace Magics.Patterns
         [SerializeField] public int TicksPerSecond;
         [SerializeField] public Collider2D Aoe;
         [SerializeField] public float BaseDamage;
+        public StatusEffectType StatusEffect;
         public abstract void MoveLogic(Transform pivot);
     }
 }

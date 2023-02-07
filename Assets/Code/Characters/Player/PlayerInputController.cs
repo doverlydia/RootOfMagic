@@ -3,6 +3,9 @@ using Notification;
 using Runes;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Characters.Player;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,12 +14,20 @@ namespace Player
 {
     public class PlayerInputController : SingletonMonoBehavior<PlayerInputController>
     {
+        
+        private TimeSpan _magicCooldownDuration;
+        public float _cooldownInSeconds;
         private ReactiveCollection<string> _inputSequence = new();
 
         public UnityEvent<string> NewUserInputState = new();
-        public UnityEvent<Rune> OnRuneCreated = new();
+        public UnityEvent OnRuneCreated = new();
+        public UnityEvent OnMissTyped = new();
+
         // new Megic created event
         public UnityEvent<MagicNotification> NewMagicCreated = new();
+        private DateTime _lastmagicCreationTImeUtc;
+
+        private Task _magicCoolDown = Task.CompletedTask;
 
         private RunesController _runesController => RunesController.Instance;
         
@@ -25,13 +36,29 @@ namespace Player
             base.Awake();
             _inputSequence.ObserveCountChanged().Subscribe(OnInputSequenceChanged);
             _inputSequence.ObserveAdd().Subscribe(OnInputSequenceGrew);
+            _magicCooldownDuration = TimeSpan.FromSeconds(_cooldownInSeconds);
+        }
+
+        private void Start()
+        {
+            PlayerController.Instance.PlayerDamage.PlayerDead.AddListener(OnPlayerDead);
+        }
+
+        private async Task MagicCoolDownAction()
+        {
+            await UniTask
+                .Delay(_magicCooldownDuration)
+                .ContinueWith(() =>
+                {
+                    _inputSequence.Clear();
+                });
         }
 
         private void OnInputSequenceChanged(int count)
         {
             var sequenceString = string.Join("", _inputSequence.ToList());
             NewUserInputState.Invoke(sequenceString);
-            print($"changed: {string.Join("", _inputSequence)}");
+            print($"changed: {sequenceString}");
         }
 
         private void OnInputSequenceGrew(CollectionAddEvent<string> addEvent)
@@ -60,18 +87,26 @@ namespace Player
                 var rune2Syllable = sequenceString.Substring(2, 2);
                 var rune1 = _runesController.GetRuneBySyllable(rune1Syllable);
                 var rune2 = _runesController.GetRuneBySyllable(rune2Syllable);
-                
                 NewUserInputState?.Invoke(sequenceString);
                 NewMagicCreated?.Invoke(new MagicNotification(rune1.patternType, rune2.statusEffectType));
-                _inputSequence.Clear();
+                _lastmagicCreationTImeUtc = DateTime.UtcNow;
+                _magicCoolDown = MagicCoolDownAction();
             }
         }
 
 
         private void Update()
         {
+            if (PlayerController.Instance.PlayerDamage.IsDead || _magicCoolDown.Status == TaskStatus.Running)
+            {
+                return;
+            }
             foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
             {
+                if (_inputSequence.Count == 4)
+                {
+                    return;
+                }
 
                 if (!Input.GetKeyDown(keyCode) || keyCode.IsArrowKey() || keyCode.IsUtilityKey())
                 {
@@ -82,14 +117,24 @@ namespace Player
                     || _runesController.RunesSecondLetter.Value.Contains(keyCode) && _inputSequence.Count % 2 == 1)
                 {
                     _inputSequence.Add(keyCode.ToString());
+                    if (_inputSequence.Count % 2 == 0)
+                    {
+                        OnRuneCreated.Invoke();
+                    }
                     continue;
                 }
-
+                
+                OnMissTyped.Invoke();
                 _inputSequence.Clear();
                 break;
 
             }
 
+        }
+
+        void OnPlayerDead()
+        {
+            _inputSequence.Clear();
         }
 
 

@@ -10,8 +10,8 @@ namespace Magics.StatusEffects
         public  override void ApplyEffect( )
         {
             base.ApplyEffect();
-            PlayerController.Instance.CurrentHp += _damagePerTick;
-            _target.CurrentHp -= _damagePerTick;
+            PlayerController.Instance.TryHeal(_damagePerTick * DamageMultiplier);
+            _target.CurrentHp.Value -= _damagePerTick;
         }
 
         public override void Init(Leech statusEffect)

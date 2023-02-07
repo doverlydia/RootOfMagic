@@ -8,11 +8,11 @@ namespace Characters
     public abstract class EffectableCharacter : MonoBehaviour
     {
         public float SpeedModifier = 1;
-        public float CurrentHp;
+        public FloatReactiveProperty CurrentHp = new FloatReactiveProperty();
         public ReactiveCollection<StatusEffect> StatusEffects = new();
 
-        [SerializeField] protected float speed;
-        [SerializeField] protected float maxHp;
+        [SerializeField] public float speed;
+        [SerializeField] public float maxHp;
 
         protected float ActualSpeed => SpeedModifier * speed;
 

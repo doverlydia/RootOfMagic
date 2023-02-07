@@ -3,14 +3,13 @@ using Characters.Enemy;
 using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
 
-public class ScoreController : MonoBehaviour
+public class ScoreController : SingletonMonoBehavior<ScoreController>
 {
     [SerializeField] private int scorePerSecond;
-    private IntReactiveProperty score;
+    private IntReactiveProperty score = new IntReactiveProperty();
     private DateTime _lastScoreUpdateUtc;
-    public static UnityEvent<int> ScoreChanged = new UnityEvent<int>();
+    public  UnityEvent<int> ScoreChanged = new ();
     private void OnEnable()
     {
         _lastScoreUpdateUtc = DateTime.UtcNow;
@@ -39,7 +38,7 @@ public class ScoreController : MonoBehaviour
         ScoreChanged.Invoke(newScore);
     }
 
-    void OnEnemyDied(Guid id)
+    void OnEnemyDied(Guid id, Vector3 pos)
     {
         score.Value += 3;     
     }

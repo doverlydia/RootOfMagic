@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &711840897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 711840898}
+  - component: {fileID: 711840899}
+  m_Layer: 0
+  m_Name: ScoreController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &711840898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711840897}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 295314275591783542}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &711840899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711840897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fec3dd5854dfa748b270a268390d174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scorePerSecond: 10
+  ScoreChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &295314274595020476
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,6 +124,7 @@ Transform:
   - {fileID: 295314274595020467}
   - {fileID: 1480288501412799136}
   - {fileID: 7729474707732789575}
+  - {fileID: 711840898}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -125,11 +174,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _enemyPrefab: {fileID: 8343441789955522716, guid: 609054c05e6d6fd40bb32eee3b0e0b4b, type: 3}
-  _spawnTickRateInSeconds: 1.5
-  _baseSpawnAmount: 4
-  _maxEnemyCount: 30
-  enemyBaseHp: 10
+  _spawnTickRateInSeconds: 10
+  _baseSpawnAmount: 50
+  _maxEnemyCount: 300
+  enemyBaseHp: 4
   enemyBaseDamage: 3
+  waveSurvived:
+    m_PersistentCalls:
+      m_Calls: []
+  MaxVariance: 0.5
 --- !u!1 &5750975122396036699
 GameObject:
   m_ObjectHideFlags: 0

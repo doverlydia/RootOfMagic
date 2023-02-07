@@ -7,7 +7,7 @@ namespace Magics.StatusEffects
         public override void ApplyEffect()
         {
             base.ApplyEffect();
-            _target.CurrentHp -= _damagePerTick;
+            _target.CurrentHp.Value -= _damagePerTick;
         }
 
         public override void Init(DOT statusEffect)

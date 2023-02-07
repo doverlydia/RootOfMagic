@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Characters.Enemy;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Characters.Enemy
@@ -16,6 +18,8 @@ namespace Characters.Enemy
     [SerializeField] private int _maxEnemyCount;
     [SerializeField] private float enemyBaseHp;
     [SerializeField] private float enemyBaseDamage;
+    [SerializeField] public UnityEvent waveSurvived = new();
+    [SerializeField] public float MaxVariance = 0.5f;
     private Dictionary<Guid, Enemy> _enemies = new();
     private float _timePassed;
     private int _amountDied;
@@ -28,11 +32,27 @@ namespace Characters.Enemy
         return _enemies.Values.OrderBy(_ => random.Next()).FirstOrDefault();
     }
 
+    public Enemy GetRandomEnemyInRadius(Vector2 position,float radius = 1)
+    {
+        var random = new System.Random();
+        return _enemies.Values
+            .Where(e => math.abs(Vector2.Distance(position, e.transform.position)) <= radius )
+            .OrderBy(_ => random.Next())
+            .FirstOrDefault();
+    }
+
+    public Enemy GetEnemyById(Guid id)
+    {
+        _enemies.TryGetValue(id,out var enemy);
+        return enemy;
+    }
+
     protected override void Awake()
     {
         base.Awake();
         _camera = Camera.main;
         Enemy.EnemyDied.AddListener(OnEnemyDied);
+        _timePassed = _spawnTickRateInSeconds;
     }
 
     private void OnDestroy()
@@ -43,10 +63,8 @@ namespace Characters.Enemy
     private void Update()
     {
         foreach (var enemy in _enemies.Values)
-        {
-            var enemyPos = enemy.gameObject.transform.position;
-            var playerPos = _player.transform.position;
-            enemy.SetMovement((playerPos - enemyPos).normalized);
+        {   
+            enemy.SetMovement(getMoveDirection(enemy));
         }
     }
 
@@ -73,12 +91,13 @@ namespace Characters.Enemy
         {
             var enemy = Instantiate(_enemyPrefab, GetSpawnPos(), Quaternion.identity);
             var enemyData = enemy.GetComponent<Enemy>();
-            ModifyEnemy(enemyData);
             _enemies[enemyData.Id] = enemyData;
+            ModifyEnemy(enemyData);
         }
         
         _timePassed -= _spawnTickRateInSeconds;
         _wavesCompletedAmount++;
+        waveSurvived.Invoke();
     }
 
     private Vector3 GetSpawnPos()
@@ -88,16 +107,16 @@ namespace Characters.Enemy
         switch (side)
         {
             case 0: // Left
-                return _camera.ViewportToWorldPoint(new Vector3(0, Random.Range(0f, 1f), _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(0, Random.Range(0.3f, 2.5f), _camera.nearClipPlane));
 
             case 1: // Right
-                return _camera.ViewportToWorldPoint(new Vector3(1, Random.Range(0f, 1f), _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(1, Random.Range(0.3f, 2.5f), _camera.nearClipPlane));
 
             case 2: // Bottom
-                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), 0, _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0.3f, 2.5f), 0, _camera.nearClipPlane));
 
             case 3: // Top
-                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), 1, _camera.nearClipPlane));
+                return _camera.ViewportToWorldPoint(new Vector3(Random.Range(0.3f, 2.5f), 1, _camera.nearClipPlane));
 
             default:
                 return Vector3.zero;
@@ -116,11 +135,24 @@ namespace Characters.Enemy
 
     private void ModifyEnemy(Enemy enemy)
     {
-        enemy.SetMaxHp(enemyBaseHp * (1 + _wavesCompletedAmount / 5));
-        enemy.damage = enemyBaseDamage * (1 + _wavesCompletedAmount / 10);
+        enemy.SetMaxHp(enemyBaseHp + (1 + _wavesCompletedAmount * 2 / 3 ));
+        enemy.damage = enemyBaseDamage + (1 + _wavesCompletedAmount / 3) + _amountDied / 20;
+        enemy.speed += Random.Range(-0.3f, 0.5f);
     }
 
-    void OnEnemyDied(Guid id)
+    private Vector2 getMoveDirection(Enemy enemy)
+    {
+        var playerPos = _player.transform.position;
+        var enemyPos = enemy.gameObject.transform.position;
+        var direction = (playerPos - enemyPos).normalized;
+        var distance = Vector2.Distance(enemyPos, playerPos);
+        var variance = Mathf.Lerp(MaxVariance, 0, distance / MaxVariance);
+        var directionVariance = Random.insideUnitCircle * variance;
+        direction += new Vector3(directionVariance.x,directionVariance.y);
+        return direction.normalized;
+    }
+
+    void OnEnemyDied(Guid id, Vector3 pos)
     {
         _enemies.Remove(id);
     }
