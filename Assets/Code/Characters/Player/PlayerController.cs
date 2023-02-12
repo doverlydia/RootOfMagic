@@ -45,6 +45,7 @@ namespace Characters.Player
                                         Input.GetAxisRaw("Vertical"))
                                         .normalized);
             }
+            Debug.Log("somehting important");
             Debug.Log("this is also important");
         }
 
