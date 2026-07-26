@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 753279298483516330}
   - component: {fileID: 753279298483516329}
   m_Layer: 0
-  m_Name: FirceCircle
+  m_Name: FireCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
